@@ -1,0 +1,14 @@
+name: AdvancedRPGMining
+version: '${project.version}'
+main: de.chaffic.advancedrpgmining.AdvancedRPGMining
+api-version: 1.15
+prefix: ARMining
+authors: [ Chaffic ]
+description: An easily configurable advanced mining leveling system.
+commands:
+  advancedrpgmining:
+    permission: advancedrpgmining.*
+    aliases:
+      - arm
+      - armining
+      - arpgmining
