@@ -1,8 +1,8 @@
-package de.chaffic.advancedrpgmining.api;
+package de.chafficplugins.mininglevels.api;
 
 import com.google.gson.reflect.TypeToken;
-import de.chaffic.advancedrpgmining.io.FileManager;
-import de.chaffic.advancedrpgmining.io.Json;
+import de.chafficplugins.mininglevels.io.FileManager;
+import de.chafficplugins.mininglevels.io.Json;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -51,14 +51,16 @@ public class MiningPlayer {
 
     private void xpChange(int xp) {
         Player player = Bukkit.getPlayer(uuid);
+        MiningLevel miningLevel = MiningLevel.miningLevels.get(level);
         if (xp < 0) {
-            this.xp = 0;
             level--;
+            miningLevel = MiningLevel.miningLevels.get(level);
+            this.xp = miningLevel.getNextLevelXP()+xp;
             if(player != null) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Your Mininglevel dropped to " + level + "!"));
             }
-        } else if (xp >= MiningLevel.miningLevels.get(level).getNextLevelXP()) {
-            this.xp = 0;
+        } else if (xp >= miningLevel.getNextLevelXP()) {
+            this.xp = miningLevel.getNextLevelXP()-xp;
             level++;
             if(player != null) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Your Mininglevel is now " + level + "!"));
@@ -72,7 +74,7 @@ public class MiningPlayer {
             }
         } else {
             if(player != null) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Level: " + level + "[" + xp + "/" + getLevel().getNextLevelXP() + "]"));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Level: " + level + " [" + xp + "/" + getLevel().getNextLevelXP() + "]"));
             }
         }
     }
@@ -99,6 +101,20 @@ public class MiningPlayer {
         if(mPs != null) {
             miningPlayers = mPs;
         }
+    }
+
+    public static void reload() throws IOException {
+        ArrayList<MiningPlayer> mPs = Json.loadFile(FileManager.PLAYERS, new TypeToken<ArrayList<MiningPlayer>>() {
+        }.getType());
+        if(mPs == null) mPs = new ArrayList<>();
+        for (MiningPlayer miningPlayer : miningPlayers) {
+            if(!mPs.contains(miningPlayer)) {
+                mPs.add(miningPlayer);
+            }
+        }
+
+        Json.saveFile(FileManager.PLAYERS, mPs);
+        init();
     }
 
     public static void save() throws IOException {

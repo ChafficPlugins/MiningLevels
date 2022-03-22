@@ -1,8 +1,8 @@
-package de.chaffic.advancedrpgmining.api;
+package de.chafficplugins.mininglevels.api;
 
 import com.google.gson.reflect.TypeToken;
-import de.chaffic.advancedrpgmining.io.FileManager;
-import de.chaffic.advancedrpgmining.io.Json;
+import de.chafficplugins.mininglevels.io.FileManager;
+import de.chafficplugins.mininglevels.io.Json;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class MiningLevel {
     }
 
     //Static
-    public static ArrayList<MiningLevel> miningLevels;
+    public static ArrayList<MiningLevel> miningLevels = new ArrayList<>();
 
     public static void init() throws IOException {
         miningLevels = Json.loadFile(FileManager.LEVELS, new TypeToken<ArrayList<MiningLevel>>(){}.getType());
@@ -85,6 +85,10 @@ public class MiningLevel {
         if(miningLevels != null) {
             Json.saveFile(FileManager.LEVELS, miningLevels);
         }
+    }
+
+    public static void reload() throws IOException {
+        init();
     }
 
     public static MiningLevel get(int index) {

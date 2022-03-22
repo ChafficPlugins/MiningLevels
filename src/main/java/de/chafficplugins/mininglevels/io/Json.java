@@ -1,4 +1,4 @@
-package de.chaffic.advancedrpgmining.io;
+package de.chafficplugins.mininglevels.io;
 
 import com.google.gson.Gson;
 

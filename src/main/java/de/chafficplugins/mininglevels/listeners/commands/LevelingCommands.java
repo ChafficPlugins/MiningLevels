@@ -1,7 +1,7 @@
-package de.chaffic.advancedrpgmining.listeners.commands;
+package de.chafficplugins.mininglevels.listeners.commands;
 
-import de.chaffic.advancedrpgmining.api.MiningLevel;
-import de.chaffic.advancedrpgmining.api.MiningPlayer;
+import de.chafficplugins.mininglevels.api.MiningLevel;
+import de.chafficplugins.mininglevels.api.MiningPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,7 +24,7 @@ public class LevelingCommands {
                 return;
             }
         }
-        sender.sendMessage("Usage: /armining setlevel <player> <level>");
+        sender.sendMessage("Usage: /ml setlevel <player> <level>");
     }
 
     public static void setXP(CommandSender sender, String[] args) {
@@ -44,7 +44,7 @@ public class LevelingCommands {
                 return;
             }
         }
-        sender.sendMessage("Usage: /armining setxp <player> <xp>");
+        sender.sendMessage("Usage: /ml setxp <player> <xp>");
     }
 
     public static void level(CommandSender sender, String[] args) {
@@ -53,13 +53,13 @@ public class LevelingCommands {
             if(player != null) {
                 MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
                 if(miningPlayer != null) {
-                    sender.sendMessage(player.getDisplayName() + " is level " + miningPlayer.getLevel());
+                    sender.sendMessage(player.getDisplayName() + " is level " + miningPlayer.getLevel().getName());
                 }
             } else {
                 sender.sendMessage("Player " + args[1] + " does not exist.");
                 return;
             }
         }
-        sender.sendMessage("Usage: /armining level <player>");
+        sender.sendMessage("Usage: /ml level <player>");
     }
 }

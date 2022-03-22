@@ -1,9 +1,9 @@
-package de.chaffic.advancedrpgmining.listeners.events;
+package de.chafficplugins.mininglevels.listeners.events;
 
-import de.chaffic.advancedrpgmining.api.MiningBlock;
-import de.chaffic.advancedrpgmining.api.MiningLevel;
-import de.chaffic.advancedrpgmining.api.MiningPlayer;
-import de.chaffic.advancedrpgmining.utils.MathUtils;
+import de.chafficplugins.mininglevels.api.MiningBlock;
+import de.chafficplugins.mininglevels.api.MiningLevel;
+import de.chafficplugins.mininglevels.api.MiningPlayer;
+import de.chafficplugins.mininglevels.utils.MathUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;

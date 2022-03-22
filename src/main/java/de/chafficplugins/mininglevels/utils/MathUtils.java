@@ -1,4 +1,4 @@
-package de.chaffic.advancedrpgmining.utils;
+package de.chafficplugins.mininglevels.utils;
 
 public class MathUtils {
     public static double randomDouble(double min, double max) {

@@ -1,21 +1,21 @@
-package de.chaffic.advancedrpgmining.api;
+package de.chafficplugins.mininglevels.api;
 
 import com.google.gson.reflect.TypeToken;
-import de.chaffic.advancedrpgmining.io.FileManager;
-import de.chaffic.advancedrpgmining.io.Json;
+import de.chafficplugins.mininglevels.io.FileManager;
+import de.chafficplugins.mininglevels.io.Json;
 import org.bukkit.Material;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class MiningBlock {
-    private final String material;
+    private final ArrayList<String> materials = new ArrayList<>();
     private final int xp;
     private final int minLevel;
 
     public MiningBlock(Material material, int xp, int minLevel) {
         if (material.isBlock()) {
-            this.material = material.name();
+            this.materials.add(material.name());
             this.xp = xp;
             this.minLevel = minLevel;
         } else {
@@ -23,8 +23,25 @@ public class MiningBlock {
         }
     }
 
-    public Material getMaterial() {
-        return Material.getMaterial(material);
+    public MiningBlock(Material[] materials, int xp, int minLevel) {
+        for (Material m : materials) {
+            if (m.isBlock()) {
+                this.materials.add(m.name());
+            } else {
+                throw new IllegalArgumentException(m.name() + " is not a block type.");
+            }
+        }
+
+        this.xp = xp;
+        this.minLevel = minLevel;
+    }
+
+    public ArrayList<Material> getMaterials() {
+        ArrayList<Material> materials = new ArrayList<>();
+        for (String material : this.materials) {
+            materials.add(Material.valueOf(material));
+        }
+        return materials;
     }
 
     public int getXp() {
@@ -35,20 +52,16 @@ public class MiningBlock {
         return minLevel;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object instanceof MiningBlock) {
-            return ((MiningBlock) object).material.equals(this.material);
-        }
-        return false;
-    }
-
     //Static
-    public static ArrayList<MiningBlock> miningBlocks;
+    public static ArrayList<MiningBlock> miningBlocks = new ArrayList<>();
 
     public static void init() throws IOException {
         miningBlocks = Json.loadFile(FileManager.BLOCKS, new TypeToken<ArrayList<MiningBlock>>() {
         }.getType());
+    }
+
+    public static void reload() throws IOException {
+        init();
     }
 
     public static void save() throws IOException {
@@ -59,7 +72,7 @@ public class MiningBlock {
 
     public static MiningBlock getMiningBlock(Material material) {
         for (MiningBlock miningBlock : miningBlocks) {
-            if (miningBlock.getMaterial().equals(material)) {
+            if (miningBlock.getMaterials().contains(material)) {
                 return miningBlock;
             }
         }

@@ -1,6 +1,6 @@
-package de.chaffic.advancedrpgmining.listeners.events;
+package de.chafficplugins.mininglevels.listeners.events;
 
-import de.chaffic.advancedrpgmining.api.MiningPlayer;
+import de.chafficplugins.mininglevels.api.MiningPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
