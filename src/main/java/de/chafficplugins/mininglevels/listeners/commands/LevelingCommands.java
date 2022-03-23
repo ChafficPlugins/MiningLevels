@@ -35,7 +35,7 @@ public class LevelingCommands {
                 if(miningPlayer != null) {
                     int xp = Integer.parseInt(args[2]);
                     if(xp >= 0) {
-                        miningPlayer.setXp(xp);
+                        miningPlayer.changeXp(xp);
                         player.sendMessage("You got " + xp + " xp.");
                     }
                 }

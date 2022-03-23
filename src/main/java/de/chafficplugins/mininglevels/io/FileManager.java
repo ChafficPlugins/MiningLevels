@@ -56,10 +56,9 @@ public class FileManager {
             ReadableByteChannel rbc = Channels.newChannel(url.openStream());
             FileOutputStream fos = new FileOutputStream(file);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            fos.close();
-            rbc.close();
         } catch (IOException e) {
-            throw new IOException("Could not download " + file.getName() + "!");
+            e.printStackTrace();
+            throw new IOException("Could not download " + file.getAbsolutePath() + ".");
         }
     }
 

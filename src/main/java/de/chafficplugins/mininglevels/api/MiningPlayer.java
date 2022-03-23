@@ -1,6 +1,7 @@
 package de.chafficplugins.mininglevels.api;
 
 import com.google.gson.reflect.TypeToken;
+import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.io.FileManager;
 import de.chafficplugins.mininglevels.io.Json;
 import net.md_5.bungee.api.ChatMessageType;
@@ -8,21 +9,27 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class MiningPlayer {
+    private final static MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
+
     private final UUID uuid;
     private int level;
     private int xp;
+    private ArrayList<ItemStack> unclaimedRewards = new ArrayList<>();
 
     public MiningPlayer(UUID uuid, int level, int xp) {
         this.uuid = uuid;
         this.level = level;
         this.xp = xp;
-        if(miningPlayers.contains(this)) {
+        if (miningPlayers.contains(this)) {
             throw new IllegalArgumentException("Player already exists!");
         }
         miningPlayers.add(this);
@@ -40,6 +47,10 @@ public class MiningPlayer {
         this.level = level;
     }
 
+    public void setLevel(MiningLevel level) {
+        this.level = level.getOrdinal();
+    }
+
     public int getXp() {
         return xp;
     }
@@ -49,39 +60,55 @@ public class MiningPlayer {
         xpChange(this.xp);
     }
 
+    public Player getPlayer() {
+        return Bukkit.getPlayer(uuid);
+    }
+
     private void xpChange(int xp) {
         Player player = Bukkit.getPlayer(uuid);
+        if(player == null) return;
         MiningLevel miningLevel = MiningLevel.miningLevels.get(level);
         if (xp < 0) {
             level--;
             miningLevel = MiningLevel.miningLevels.get(level);
-            this.xp = miningLevel.getNextLevelXP()+xp;
-            if(player != null) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Your Mininglevel dropped to " + level + "!"));
-            }
-        } else if (xp >= miningLevel.getNextLevelXP()) {
-            this.xp = miningLevel.getNextLevelXP()-xp;
-            level++;
-            if(player != null) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Your Mininglevel is now " + level + "!"));
-                player.sendMessage(ChatColor.WHITE + "Level " + ChatColor.GREEN + level);
-                player.sendMessage(ChatColor.WHITE + "-------------");
-                player.sendMessage("Haste Level: " + getLevel().getHasteLevel());
-                player.sendMessage("Instant Break Probability: " + getLevel().getInstantBreakProbability());
-                player.sendMessage("Extra Drops Probability: " + getLevel().getExtraOreProbability());
-                player.sendMessage("Max Extra Drops: " + getLevel().getMaxExtraOre());
-                player.sendMessage("Xp To Next Level: " + getLevel().getNextLevelXP());
-            }
+            this.xp = miningLevel.getNextLevelXP() + xp;
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Your Mininglevel dropped to " + level + "!"));
+        } else if (xp >= miningLevel.getNextLevelXP() && level + 1 < MiningLevel.miningLevels.size()) {
+            getLevel().levelUp(this, player);
         } else {
-            if(player != null) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Level: " + level + " [" + xp + "/" + getLevel().getNextLevelXP() + "]"));
-            }
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Level " + getLevel().getName() + ": [" + xp + "/" + getLevel().getNextLevelXP() + "]"));
         }
+    }
+
+    public void changeXp(int xp) {
+        this.xp = xp;
+        xpChange(xp);
     }
 
     public void setXp(int xp) {
         this.xp = xp;
-        xpChange(xp);
+    }
+
+    /**
+     * Claims all unclaimed rewards.
+     * @return 0 if there are no rewards to claim, 1 if all rewards were claimed, 2 if there were some rewards left to claim.
+     */
+    public int claim() {
+        if(unclaimedRewards.size() > 0) {
+            HashMap<Integer, ItemStack> stillUnclaimed = getPlayer().getInventory().addItem(unclaimedRewards.toArray(new ItemStack[0]));
+            if(stillUnclaimed.size() > 0) {
+                unclaimedRewards.addAll(stillUnclaimed.values());
+                return 2;
+            } else {
+                unclaimedRewards.clear();
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    public void addRewards(ItemStack... rewards) {
+        unclaimedRewards.addAll(List.of(rewards));
     }
 
     @Override

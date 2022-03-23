@@ -10,3 +10,8 @@ commands:
   mininglevels:
     aliases:
       - ml
+    usage: /mininglevels
+  miningrewards:
+    aliases:
+      - mr
+    usage: /miningrewards

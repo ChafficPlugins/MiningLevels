@@ -1,7 +1,7 @@
 package de.chafficplugins.mininglevels.utils;
 
 public class ConfigStrings {
-    public final static int SPIGOT_ID = 76816;
+    public final static int SPIGOT_ID = 100886;
     public final static int BSTATS_ID = 14709;
     public final static String CRUCIAL_API_VERSION = "2.1.1";
 
@@ -15,4 +15,7 @@ public class ConfigStrings {
     public final static String PERMISSION_SET_XP = "mininglevels.setxp";
     public final static String PERMISSION_LEVEL = "mininglevels.level";
     public final static String PERMISSION_RELOAD = "mininglevels.reload";
+
+    //Configuration
+    public final static String LVL_UP_SOUND = "levelup_sound";
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
 
 import static de.chafficplugins.mininglevels.utils.SenderUtils.hasOnePermissions;
 
-public class CommandListener implements CommandExecutor {
+public class MiningLevelsCommandListener implements CommandExecutor {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
@@ -25,28 +25,31 @@ public class CommandListener implements CommandExecutor {
                     case "setlevel" -> {
                         if(!hasOnePermissions(sender, "mininglevels.setlevel")) {
                             sender.sendMessage("§cYou don't have the permission to do this!");
-                            return false;
+                            return true;
                         }
                         LevelingCommands.setLevel(sender, args);
+                        return true;
                     }
                     case "setxp" -> {
                         if(!hasOnePermissions(sender, "mininglevels.setxp")) {
                             sender.sendMessage("§cYou don't have the permission to do this!");
-                            return false;
+                            return true;
                         }
                         LevelingCommands.setXP(sender, args);
+                        return true;
                     }
                     case "level" -> {
                         if(!hasOnePermissions(sender, "mininglevels.level")) {
                             sender.sendMessage("§cYou don't have the permission to do this!");
-                            return false;
+                            return true;
                         }
                         LevelingCommands.level(sender, args);
+                        return true;
                     }
                     case "reload" -> {
                         if(!hasOnePermissions(sender, "mininglevels.reload")) {
                             sender.sendMessage("§cYou don't have the permission to do this!");
-                            return false;
+                            return true;
                         }
                         try {
                             MiningLevel.reload();
@@ -57,6 +60,7 @@ public class CommandListener implements CommandExecutor {
                             e.printStackTrace();
                             sender.sendMessage("§cAn error occurred while reloading!");
                         }
+                        return true;
                     }
                     case "info" -> {
                         sender.sendMessage("§aMining Levels by §c" + plugin.getDescription().getAuthors());
@@ -65,31 +69,35 @@ public class CommandListener implements CommandExecutor {
                     case "self" -> {
                         if(!(sender instanceof Player)) {
                             sender.sendMessage("§cYou can't use this command from console!");
-                            return false;
+                            return true;
                         }
                         Player player = (Player) sender;
                         MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
                         if(miningPlayer == null) {
                             sender.sendMessage("§cAn error occurred. Please rejoin the server!");
-                            return false;
+                            return true;
                         }
                         player.sendMessage("§aYour current level is §c" + miningPlayer.getLevel().getName());
                         player.sendMessage("§aYour current XP is §c" + miningPlayer.getXp());
+                        return true;
                     }
                     default -> {
+                        sender.sendMessage("§a/mininglevels info");
+                        sender.sendMessage("§a/mininglevels self");
+                        sender.sendMessage("§a/miningrewards");
                         if(hasOnePermissions(sender, "mininglevels.setlevel")) sender.sendMessage("§a/mininglevels setlevel <player> <level>");
                         if(hasOnePermissions(sender, "mininglevels.setxp")) sender.sendMessage("§a/mininglevels setxp <player> <xp>");
                         if(hasOnePermissions(sender, "mininglevels.level")) sender.sendMessage("§a/mininglevels level <player>");
                         if(hasOnePermissions(sender, "mininglevels.reload")) sender.sendMessage("§a/mininglevels reload");
-                        sender.sendMessage("§a/mininglevels info");
-                        sender.sendMessage("§a/mininglevels self");
+                        return true;
                     }
                 }
             } else {
                 sender.sendMessage("/ml help");
+                return true;
             }
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }

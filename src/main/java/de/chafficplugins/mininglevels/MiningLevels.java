@@ -4,7 +4,8 @@ import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
 import de.chafficplugins.mininglevels.io.FileManager;
-import de.chafficplugins.mininglevels.listeners.CommandListener;
+import de.chafficplugins.mininglevels.listeners.MiningLevelsCommandListener;
+import de.chafficplugins.mininglevels.listeners.RewardCommandListener;
 import de.chafficplugins.mininglevels.listeners.events.MiningEvents;
 import de.chafficplugins.mininglevels.listeners.events.ServerEvents;
 import de.chafficplugins.mininglevels.utils.Crucial;
@@ -12,15 +13,18 @@ import io.github.chafficui.CrucialAPI.Utils.Server;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.BSTATS_ID;
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.LVL_UP_SOUND;
 
 public final class MiningLevels extends JavaPlugin {
     private final Logger logger = Logger.getLogger("MiningLevels");
@@ -47,15 +51,16 @@ public final class MiningLevels extends JavaPlugin {
                 MiningLevel.init();
                 MiningPlayer.init();
                 MiningBlock.init();
-                registerCommand("mininglevels", new CommandListener());
+                registerCommand("mininglevels", new MiningLevelsCommandListener());
+                registerCommand("miningrewards", new RewardCommandListener());
                 registerEvents(new MiningEvents(), new ServerEvents());
                 new Stats(this, BSTATS_ID);
                 log(ChatColor.DARK_GREEN + getDescription().getName() + " is now enabled (Version: " + getDescription().getVersion() + ") made by "
                         + ChatColor.AQUA + getDescription().getAuthors() + ".");
             }
         } catch (IOException e) {
-            error("Failed to startup " + getDescription().getName() + " (Version: " + getDescription().getVersion() + ")");
             e.printStackTrace();
+            error("Failed to startup " + getDescription().getName() + " (Version: " + getDescription().getVersion() + ")");
             getPluginLoader().disablePlugin(this);
         }
     }
@@ -85,10 +90,19 @@ public final class MiningLevels extends JavaPlugin {
         }
     }
 
+    public static Sound lvlUpSound;
+
     private void loadConfig() {
         //getConfig().addDefault(AUTO_UPDATE, true);
+        getConfig().addDefault(LVL_UP_SOUND, Sound.ENTITY_PLAYER_LEVELUP.name());
         getConfig().options().copyDefaults(true);
         saveConfig();
+
+        try {
+            lvlUpSound = Sound.valueOf(getConfigString(LVL_UP_SOUND).toUpperCase(Locale.ROOT));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            error("Config value levelup sound is either misspelled or missing! Using ENTITY_PLAYER_LEVELUP");
+        }
     }
 
     public boolean getConfigBoolean(String path) {
