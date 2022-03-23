@@ -6,8 +6,8 @@ public class ConfigStrings {
     public final static String CRUCIAL_API_VERSION = "2.1.1";
 
     public final static String DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=";
-    public final static String MINING_LEVELS_JSON = "1bAez0yQUL5fINBz8jw87DpX4JOQle4rt";
-    public final static String MINING_BLOCKS_JSON = "19MBgzBfq2AYObro1l_PXihZIzfpEblQv";
+    public final static String MINING_LEVELS_JSON = "145W6qtWM2-PA3vyDlOpa3nnYrn0bUVyb";
+    public final static String MINING_BLOCKS_JSON = "1W1EN0NIJKH69cokExNKVglOw6YPbEBYT";
 
     //Permissions
     public final static String PERMISSION_ADMIN = "mininglevels.*";

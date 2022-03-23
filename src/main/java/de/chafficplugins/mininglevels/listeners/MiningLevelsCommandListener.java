@@ -5,6 +5,7 @@ import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
 import de.chafficplugins.mininglevels.listeners.commands.LevelingCommands;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -71,15 +72,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                             sender.sendMessage("§cYou can't use this command from console!");
                             return true;
                         }
-                        Player player = (Player) sender;
-                        MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
-                        if(miningPlayer == null) {
-                            sender.sendMessage("§cAn error occurred. Please rejoin the server!");
-                            return true;
-                        }
-                        player.sendMessage("§aYour current level is §c" + miningPlayer.getLevel().getName());
-                        player.sendMessage("§aYour current XP is §c" + miningPlayer.getXp());
-                        return true;
+                        return showLevelInfo(sender);
                     }
                     default -> {
                         sender.sendMessage("§a/mininglevels info");
@@ -93,11 +86,28 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                     }
                 }
             } else {
-                sender.sendMessage("/ml help");
-                return true;
+                return showLevelInfo(sender);
             }
             return true;
         }
         return false;
+    }
+
+    private boolean showLevelInfo(@NotNull CommandSender sender) {
+        Player player = (Player) sender;
+        MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
+        if(miningPlayer == null) {
+            sender.sendMessage("§cAn error occurred. Please rejoin the server!");
+            return true;
+        }
+        MiningLevel level = miningPlayer.getLevel();
+
+        player.sendMessage("§aYour current level is §c" + miningPlayer.getLevel().getName());
+        player.sendMessage("§aYour current XP is: §c[" + miningPlayer.getXp() + "/" + level.getNextLevelXP() + "]");
+        player.sendMessage(ChatColor.WHITE + "Haste Level: " + ChatColor.GREEN + level.getHasteLevel());
+        player.sendMessage(ChatColor.WHITE + "Extra ore probability: " + ChatColor.GREEN + level.getExtraOreProbability());
+        player.sendMessage(ChatColor.WHITE + "Max. extra ore amount: " + ChatColor.GREEN + level.getMaxExtraOre());
+        player.sendMessage(ChatColor.WHITE + "Instant break probability: " + ChatColor.GREEN + level.getInstantBreakProbability());
+        return true;
     }
 }
