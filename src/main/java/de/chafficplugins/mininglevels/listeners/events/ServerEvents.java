@@ -11,7 +11,7 @@ import java.io.IOException;
 public class ServerEvents implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) throws IOException {
-        if(!MiningPlayer.exists(event.getPlayer().getUniqueId())) {
+        if(MiningPlayer.notExists(event.getPlayer().getUniqueId())) {
             new MiningPlayer(event.getPlayer().getUniqueId(), 0, 0);
             MiningPlayer.save();
         }
@@ -19,7 +19,7 @@ public class ServerEvents implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) throws IOException {
-        if(!MiningPlayer.exists(event.getPlayer().getUniqueId())) {
+        if(MiningPlayer.notExists(event.getPlayer().getUniqueId())) {
             new MiningPlayer(event.getPlayer().getUniqueId(), 0, 0);
         }
         MiningPlayer.save();
