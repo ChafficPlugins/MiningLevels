@@ -28,7 +28,7 @@ public class MiningLevel {
     /**
      * The xp needed to levelUp to {@link MiningLevel#getNext()}.
      */
-    private final int nextLevelXP;
+    private int nextLevelXP;
     /**
      * The place this level takes in the list.
      */
@@ -56,7 +56,7 @@ public class MiningLevel {
     /**
      * The items a player will be able to claim with the claim command, when he has leveled up to this MiningLevel.
      */
-    private final Reward[] rewards = new Reward[0];
+    private ArrayList<ItemStack> rewards = new ArrayList<>();
 
     /**
      * Initializes the MiningLevels.
@@ -82,16 +82,23 @@ public class MiningLevel {
      * @return An Array of ItemStacks.
      */
     public ItemStack[] getRewards() {
-        ItemStack[] items = new ItemStack[rewards.length];
-        for (int i = 0; i < rewards.length; i++) {
-            ItemStack item = rewards[i].getItemStack();
-            if(item != null) {
-                items[i] = item;
-            } else {
-                return new ItemStack[0];
-            }
-        }
-        return items;
+        return rewards.toArray(new ItemStack[0]);
+    }
+
+    /**
+     * Adds an ItemStack as a reward.
+     * @param item The ItemStack to add.
+     */
+    public void addReward(ItemStack item) {
+        rewards.add(item);
+    }
+
+    /**
+     * Sets the rewards.
+     * @param rewards The new rewards.
+     */
+    public void setRewards(ArrayList<ItemStack> rewards) {
+        this.rewards = rewards;
     }
 
     /**
@@ -99,6 +106,14 @@ public class MiningLevel {
      */
     public int getNextLevelXP() {
         return nextLevelXP;
+    }
+
+    /**
+     * Sets the xp needed to levelUp to {@link MiningLevel#getNext()}.
+     * @param nextLevelXP The xp needed to levelUp to {@link MiningLevel#getNext()}.
+     */
+    public void setNextLevelXP(int nextLevelXP) {
+        this.nextLevelXP = nextLevelXP;
     }
 
     /**
@@ -119,6 +134,9 @@ public class MiningLevel {
      * Sets the probability a player with this mining level will break a MiningBlock instantly.
      */
     public void setInstantBreakProbability(float instantBreakProbability) {
+        if(instantBreakProbability < 0 || instantBreakProbability > 100) {
+            return;
+        }
         this.instantBreakProbability = instantBreakProbability;
     }
 
@@ -133,6 +151,9 @@ public class MiningLevel {
      * Sets the probability a player with this mining level will receive extra ores when breaking a MiningBlock.
      */
     public void setExtraOreProbability(float extraOreProbability) {
+        if(extraOreProbability < 0 || extraOreProbability > 100) {
+            return;
+        }
         this.extraOreProbability = extraOreProbability;
     }
 
@@ -147,6 +168,9 @@ public class MiningLevel {
      * Sets the maximum amount of dropped extra ores a player with this mining level can receive.
      */
     public void setMaxExtraOre(float maxExtraOre) {
+        if(maxExtraOre < 0) {
+            return;
+        }
         this.maxExtraOre = maxExtraOre;
     }
 
@@ -161,6 +185,9 @@ public class MiningLevel {
      * Sets the hasteLevel a player will receive when damaging a MiningBlock with this MiningLevel.
      */
     public void setHasteLevel(int hasteLevel) {
+        if(hasteLevel < 0) {
+            return;
+        }
         this.hasteLevel = hasteLevel;
     }
 
@@ -223,11 +250,11 @@ public class MiningLevel {
         }
 
         //tell the player all rewards
-        if(nextLevel.rewards != null && nextLevel.rewards.length > 0) {
+        if(nextLevel.rewards != null && nextLevel.rewards.size() > 0) {
             player.sendMessage("");
             player.sendMessage(ChatColor.WHITE + "Rewards: ");
-            for (Reward reward : nextLevel.rewards) {
-                player.sendMessage(ChatColor.WHITE + "  " + ChatColor.YELLOW + reward.getName() + ChatColor.WHITE + ": " + ChatColor.GREEN + reward.getAmount());
+            for (ItemStack reward : nextLevel.rewards) {
+                player.sendMessage(ChatColor.WHITE + "  " + ChatColor.YELLOW + getName(reward) + ChatColor.WHITE + ": " + ChatColor.GREEN + reward.getAmount());
             }
             miningPlayer.addRewards(nextLevel.getRewards());
             player.sendMessage("Claim your rewards with /miningrewards");
@@ -294,5 +321,20 @@ public class MiningLevel {
             }
         }
         return null;
+    }
+
+    /**
+     * Returns the material name or the displayName of an item.
+     */
+    public static String getName(ItemStack itemStack) {
+        if(itemStack.getType().name().equals("AIR")) {
+            return "AIR";
+        }
+        if(itemStack.hasItemMeta()) {
+            if(itemStack.getItemMeta().hasDisplayName()) {
+                return itemStack.getItemMeta().getDisplayName();
+            }
+        }
+        return itemStack.getType().name();
     }
 }

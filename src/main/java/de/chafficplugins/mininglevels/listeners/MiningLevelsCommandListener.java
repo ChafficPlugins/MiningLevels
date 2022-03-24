@@ -74,7 +74,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                         }
                         return showLevelInfo(sender);
                     }
-                    case "editor" -> {
+                    case "leveleditor" -> {
                         if(!hasOnePermissions(sender, "mininglevels.editor")) {
                             sender.sendMessage("§cYou don't have the permission to do this!");
                             return true;
