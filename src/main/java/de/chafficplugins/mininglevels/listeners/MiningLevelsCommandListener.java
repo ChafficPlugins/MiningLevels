@@ -4,6 +4,7 @@ import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
+import de.chafficplugins.mininglevels.gui.levels.LevelList;
 import de.chafficplugins.mininglevels.listeners.commands.LevelingCommands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -19,7 +20,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("mininglevels") && sender.isOp()) {
+        if (command.getName().equalsIgnoreCase("mininglevels")) {
             if (args.length > 0) {
                 switch (args[0]) {
                     case "setlevel" -> {
@@ -73,7 +74,19 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                         }
                         return showLevelInfo(sender);
                     }
+                    case "editor" -> {
+                        if(!hasOnePermissions(sender, "mininglevels.editor")) {
+                            sender.sendMessage("§cYou don't have the permission to do this!");
+                            return true;
+                        }
+                        if(!(sender instanceof Player)) {
+                            sender.sendMessage("§cYou can't use this command from console!");
+                            return true;
+                        }
+                        LevelList.getInstance().open((Player) sender);
+                    }
                     default -> {
+                        sender.sendMessage("§a/mininglevels");
                         sender.sendMessage("§a/mininglevels info");
                         sender.sendMessage("§a/mininglevels self");
                         sender.sendMessage("§a/miningrewards");
