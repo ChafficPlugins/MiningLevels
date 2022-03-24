@@ -47,8 +47,10 @@ public class MiningEvents implements Listener {
             final MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(event.getPlayer().getUniqueId());
             if(miningPlayer != null) {
                 if(miningPlayer.getLevel().getOrdinal() < block.getMinLevel()) {
-                    event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Level " + block.getMinLevel() + " needed!"));
                     event.setCancelled(true);
+                    MiningLevel level = MiningLevel.get(block.getMinLevel());
+                    if(level == null) return;
+                    event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Level " + level.getName() + " needed!"));
                 } else {
                     miningPlayer.alterXp(block.getXp());
                     MiningLevel level = miningPlayer.getLevel();
