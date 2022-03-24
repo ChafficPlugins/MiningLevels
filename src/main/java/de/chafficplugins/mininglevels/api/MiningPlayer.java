@@ -17,14 +17,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Chaffic
+ * @since 1.0.0
+ * @version 1.0.0
+ *
+ * Contains a player's mining level, its xp and unclaimed rewards.
+ */
 public class MiningPlayer {
-    private final static MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
 
+    /**
+     * The bukkit player's uuid.
+     */
     private final UUID uuid;
+    /**
+     * The ordinal of the player's mining level.
+     */
     private int level;
+    /**
+     * The amount of xp the player has.
+     */
     private int xp;
+    /**
+     * All currently unclaimed rewards.
+     */
     private final ArrayList<ItemStack> unclaimedRewards = new ArrayList<>();
 
+    /**
+     * Creates a new miningPlayer from a given uuid.
+     * @param uuid The uuid of the player.
+     * @param level The level of the player.
+     * @param xp The xp of the player.
+     * @throws IllegalArgumentException If the player already exists.
+     */
     public MiningPlayer(UUID uuid, int level, int xp) {
         this.uuid = uuid;
         this.level = level;
@@ -35,36 +60,65 @@ public class MiningPlayer {
         miningPlayers.add(this);
     }
 
+    /**
+     * @return The bukkit player's uuid.
+     */
     public UUID getUUID() {
         return uuid;
     }
 
+    /**
+     * @return The player's mining level.
+     */
     public MiningLevel getLevel() {
         return MiningLevel.get(level);
     }
 
+    /**
+     * Sets the player's mining level to the given level.
+     * @param level The ordinal to set the player's level to.
+     */
     public void setLevel(int level) {
         this.level = level;
     }
 
+    /**
+     * Sets the player's mining level to the given level.
+     * @param level The level to set the player's level to.
+     */
     public void setLevel(MiningLevel level) {
         this.level = level.getOrdinal();
     }
 
+    /**
+     * The current xp amount of the player.
+     * @return The current xp amount of the player.
+     */
     public int getXp() {
         return xp;
     }
 
+    /**
+     * Alters the player's xp by the given amount and levels up if necessary.
+     * @param xp The amount of xp to alter the players xp by.
+     */
     public void alterXp(int xp) {
         this.xp += xp;
-        xpChange(this.xp);
+        xpChange();
     }
 
+    /**
+     * @return The bukkit player of the MiningPlayer.
+     */
     public Player getPlayer() {
         return Bukkit.getPlayer(uuid);
     }
 
-    private void xpChange(int xp) {
+    /**
+     * Calculates if the player needs to level up or not.
+     * Sends a status message to the player.
+     */
+    private void xpChange() {
         Player player = Bukkit.getPlayer(uuid);
         if(player == null) return;
         MiningLevel miningLevel = MiningLevel.miningLevels.get(level);
@@ -74,17 +128,25 @@ public class MiningPlayer {
             this.xp = miningLevel.getNextLevelXP() + xp;
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Your Mininglevel dropped to " + level + "!"));
         } else if (xp >= miningLevel.getNextLevelXP() && level + 1 < MiningLevel.miningLevels.size()) {
-            getLevel().levelUp(this, player);
+            getLevel().levelUp(this);
         } else {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Level " + getLevel().getName() + ": [" + xp + "/" + getLevel().getNextLevelXP() + "]"));
         }
     }
 
+    /**
+     * Changes the player's xp to the given amount and checks if the player needs to level up.
+     * @param xp The amount of xp to set the player's xp to.
+     */
     public void changeXp(int xp) {
         this.xp = xp;
-        xpChange(xp);
+        xpChange();
     }
 
+    /**
+     * Sets the player's xp to the given amount without checking if the player needs to level up.
+     * @param xp The amount of xp to set the player's xp to.
+     */
     public void setXp(int xp) {
         this.xp = xp;
     }
@@ -107,6 +169,10 @@ public class MiningPlayer {
         return 0;
     }
 
+    /**
+     * Adds the given items to the unclaimed rewards.
+     * @param rewards The items to add to the unclaimed rewards.
+     */
     public void addRewards(ItemStack... rewards) {
         unclaimedRewards.addAll(List.of(rewards));
     }
@@ -120,8 +186,15 @@ public class MiningPlayer {
     }
 
     //Static
+    /**
+     * A list of all the players.
+     */
     public static ArrayList<MiningPlayer> miningPlayers = new ArrayList<>();
 
+    /**
+     * A method to load all the MiningPlayers registered in the file FileManager.PLAYERS, into the static ArrayList miningPlayers.
+     * @throws IOException If the file FileManager.PLAYERS is not found.
+     */
     public static void init() throws IOException {
         ArrayList<MiningPlayer> mPs = Json.fromJson(FileManager.PLAYERS, new TypeToken<ArrayList<MiningPlayer>>() {
         }.getType());
@@ -130,6 +203,11 @@ public class MiningPlayer {
         }
     }
 
+    /**
+     * Reloads the MiningPlayers from the file FileManager.PLAYERS and adds all new players to the static ArrayList miningPlayers.
+     * Also saves this new list to the file FileManager.PLAYERS.
+     * @throws IOException If the file FileManager.PLAYERS is not found.
+     */
     public static void reload() throws IOException {
         ArrayList<MiningPlayer> mPs = Json.fromJson(FileManager.PLAYERS, new TypeToken<ArrayList<MiningPlayer>>() {
         }.getType());
@@ -144,12 +222,21 @@ public class MiningPlayer {
         init();
     }
 
+    /**
+     * A method to save all the MiningPlayers in the static ArrayList miningPlayers to the file FileManager.PLAYERS.
+     * @throws IOException If the file FileManager.PLAYERS is not found.
+     */
     public static void save() throws IOException {
         if (miningPlayers != null) {
             FileManager.saveFile(FileManager.PLAYERS, miningPlayers);
         }
     }
 
+    /**
+     * Gets the MiningPlayer with the given UUID.
+     * @param uuid The UUID of the player to get.
+     * @return The MiningPlayer with the given UUID.
+     */
     public static MiningPlayer getMiningPlayer(UUID uuid) {
         for (MiningPlayer miningPlayer : miningPlayers) {
             if(uuid.equals(miningPlayer.uuid)) {
@@ -159,6 +246,11 @@ public class MiningPlayer {
         return null;
     }
 
+    /**
+     * Checks if the given player is a MiningPlayer.
+     * @param uuid The UUID of the player to check.
+     * @return True if the player is a MiningPlayer, false if not.
+     */
     public static boolean notExists(UUID uuid) {
         return getMiningPlayer(uuid) == null;
     }
