@@ -19,9 +19,6 @@ public class ServerEvents implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) throws IOException {
-        if(MiningPlayer.notExists(event.getPlayer().getUniqueId())) {
-            new MiningPlayer(event.getPlayer().getUniqueId(), 0, 0);
-        }
         MiningPlayer.save();
     }
 }

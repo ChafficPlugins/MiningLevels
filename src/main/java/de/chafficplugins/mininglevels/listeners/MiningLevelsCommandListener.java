@@ -4,6 +4,7 @@ import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
+import de.chafficplugins.mininglevels.gui.blocks.BlockList;
 import de.chafficplugins.mininglevels.gui.levels.LevelList;
 import de.chafficplugins.mininglevels.listeners.commands.LevelingCommands;
 import org.bukkit.ChatColor;
@@ -84,6 +85,17 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                             return true;
                         }
                         LevelList.getInstance().open((Player) sender);
+                    }
+                    case "blockeditor" -> {
+                        if(!hasOnePermissions(sender, "mininglevels.editor")) {
+                            sender.sendMessage("§cYou don't have the permission to do this!");
+                            return true;
+                        }
+                        if(!(sender instanceof Player)) {
+                            sender.sendMessage("§cYou can't use this command from console!");
+                            return true;
+                        }
+                        BlockList.getInstance().open((Player) sender);
                     }
                     default -> {
                         sender.sendMessage("§a/mininglevels");

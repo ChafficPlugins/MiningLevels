@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import de.chafficplugins.mininglevels.io.FileManager;
 import io.github.chafficui.CrucialAPI.io.Json;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,15 +21,15 @@ public class MiningBlock {
     /**
      * The materials that will give the certain xp amount and need the level to be mined.
      */
-    private final ArrayList<String> materials = new ArrayList<>();
+    private ArrayList<String> materials = new ArrayList<>();
     /**
      * The xp amount that will be given when the block is mined.
      */
-    private final int xp;
+    private int xp;
     /**
      * The level needed to mine the block.
      */
-    private final int minLevel;
+    private int minLevel;
 
     /**
      * The default constructor, used to create a new MiningBlock.
@@ -93,6 +94,24 @@ public class MiningBlock {
      */
     public int getMinLevel() {
         return minLevel;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public void setMinLevel(int minLevel) {
+        if(minLevel > 0 && minLevel < MiningLevel.miningLevels.size()) {
+            this.minLevel = minLevel;
+        }
+    }
+
+    public void setMaterials(ArrayList<ItemStack> materials) {
+        ArrayList<String> newMaterials = new ArrayList<>();
+        for (ItemStack material : materials) {
+            newMaterials.add(material.getType().name());
+        }
+        this.materials = newMaterials;
     }
 
     //Static
