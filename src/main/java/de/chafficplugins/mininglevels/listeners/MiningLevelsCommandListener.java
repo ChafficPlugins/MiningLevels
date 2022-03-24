@@ -10,7 +10,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -19,7 +18,7 @@ import static de.chafficplugins.mininglevels.utils.SenderUtils.hasOnePermissions
 public class MiningLevelsCommandListener implements CommandExecutor {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("mininglevels") && sender.isOp()) {
             if (args.length > 0) {
                 switch (args[0]) {
@@ -93,7 +92,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
         return false;
     }
 
-    private boolean showLevelInfo(@NotNull CommandSender sender) {
+    private boolean showLevelInfo(CommandSender sender) {
         Player player = (Player) sender;
         MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
         if(miningPlayer == null) {

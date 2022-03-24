@@ -3,7 +3,7 @@ package de.chafficplugins.mininglevels.api;
 import com.google.gson.reflect.TypeToken;
 import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.io.FileManager;
-import de.chafficplugins.mininglevels.io.Json;
+import io.github.chafficui.CrucialAPI.io.Json;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -23,7 +23,7 @@ public class MiningPlayer {
     private final UUID uuid;
     private int level;
     private int xp;
-    private ArrayList<ItemStack> unclaimedRewards = new ArrayList<>();
+    private final ArrayList<ItemStack> unclaimedRewards = new ArrayList<>();
 
     public MiningPlayer(UUID uuid, int level, int xp) {
         this.uuid = uuid;
@@ -123,7 +123,7 @@ public class MiningPlayer {
     public static ArrayList<MiningPlayer> miningPlayers = new ArrayList<>();
 
     public static void init() throws IOException {
-        ArrayList<MiningPlayer> mPs = Json.loadFile(FileManager.PLAYERS, new TypeToken<ArrayList<MiningPlayer>>() {
+        ArrayList<MiningPlayer> mPs = Json.fromJson(FileManager.PLAYERS, new TypeToken<ArrayList<MiningPlayer>>() {
         }.getType());
         if(mPs != null) {
             miningPlayers = mPs;
@@ -131,7 +131,7 @@ public class MiningPlayer {
     }
 
     public static void reload() throws IOException {
-        ArrayList<MiningPlayer> mPs = Json.loadFile(FileManager.PLAYERS, new TypeToken<ArrayList<MiningPlayer>>() {
+        ArrayList<MiningPlayer> mPs = Json.fromJson(FileManager.PLAYERS, new TypeToken<ArrayList<MiningPlayer>>() {
         }.getType());
         if(mPs == null) mPs = new ArrayList<>();
         for (MiningPlayer miningPlayer : miningPlayers) {
@@ -140,13 +140,13 @@ public class MiningPlayer {
             }
         }
 
-        Json.saveFile(FileManager.PLAYERS, mPs);
+        FileManager.saveFile(FileManager.PLAYERS, mPs);
         init();
     }
 
     public static void save() throws IOException {
         if (miningPlayers != null) {
-            Json.saveFile(FileManager.PLAYERS, miningPlayers);
+            FileManager.saveFile(FileManager.PLAYERS, miningPlayers);
         }
     }
 
@@ -159,7 +159,7 @@ public class MiningPlayer {
         return null;
     }
 
-    public static boolean exists(UUID uuid) {
-        return getMiningPlayer(uuid) != null;
+    public static boolean notExists(UUID uuid) {
+        return getMiningPlayer(uuid) == null;
     }
 }

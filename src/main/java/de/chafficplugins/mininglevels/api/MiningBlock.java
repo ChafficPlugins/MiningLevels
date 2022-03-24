@@ -2,7 +2,7 @@ package de.chafficplugins.mininglevels.api;
 
 import com.google.gson.reflect.TypeToken;
 import de.chafficplugins.mininglevels.io.FileManager;
-import de.chafficplugins.mininglevels.io.Json;
+import io.github.chafficui.CrucialAPI.io.Json;
 import org.bukkit.Material;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class MiningBlock {
     public static ArrayList<MiningBlock> miningBlocks = new ArrayList<>();
 
     public static void init() throws IOException {
-        miningBlocks = Json.loadFile(FileManager.BLOCKS, new TypeToken<ArrayList<MiningBlock>>() {
+        miningBlocks = Json.fromJson(FileManager.BLOCKS, new TypeToken<ArrayList<MiningBlock>>() {
         }.getType());
     }
 
@@ -66,7 +66,7 @@ public class MiningBlock {
 
     public static void save() throws IOException {
         if (miningBlocks != null) {
-            Json.saveFile(FileManager.BLOCKS, miningBlocks);
+            FileManager.saveFile(FileManager.BLOCKS, miningBlocks);
         }
     }
 

@@ -3,11 +3,10 @@ package de.chafficplugins.mininglevels.api;
 import com.google.gson.reflect.TypeToken;
 import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.io.FileManager;
-import de.chafficplugins.mininglevels.io.Json;
+import io.github.chafficui.CrucialAPI.io.Json;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -158,12 +157,13 @@ public class MiningLevel {
     public static ArrayList<MiningLevel> miningLevels = new ArrayList<>();
 
     public static void init() throws IOException {
-        miningLevels = Json.loadFile(FileManager.LEVELS, new TypeToken<ArrayList<MiningLevel>>(){}.getType());
+        miningLevels = Json.fromJson(FileManager.LEVELS, new TypeToken<ArrayList<MiningLevel>>() {
+        }.getType());
     }
 
     public static void save() throws IOException {
         if(miningLevels != null) {
-            Json.saveFile(FileManager.LEVELS, miningLevels);
+            FileManager.saveFile(FileManager.LEVELS, miningLevels);
         }
     }
 

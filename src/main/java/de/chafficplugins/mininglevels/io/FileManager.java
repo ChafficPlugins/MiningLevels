@@ -1,6 +1,7 @@
 package de.chafficplugins.mininglevels.io;
 
 import de.chafficplugins.mininglevels.MiningLevels;
+import io.github.chafficui.CrucialAPI.io.Json;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -70,5 +71,9 @@ public class FileManager {
             }
             throw new IOException("Could not create " + file.getAbsolutePath() + ".");
         }
+    }
+
+    public static void saveFile(String filename, Object object) throws IOException {
+        Json.saveFile(Json.toJson(object), filename);
     }
 }
