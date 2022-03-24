@@ -8,6 +8,7 @@ import de.chafficplugins.mininglevels.listeners.MiningLevelsCommandListener;
 import de.chafficplugins.mininglevels.listeners.RewardCommandListener;
 import de.chafficplugins.mininglevels.listeners.events.MiningEvents;
 import de.chafficplugins.mininglevels.listeners.events.ServerEvents;
+import de.chafficplugins.mininglevels.placeholders.LevelPlaceholders;
 import de.chafficplugins.mininglevels.utils.Crucial;
 import io.github.chafficui.CrucialAPI.Utils.Server;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
@@ -51,6 +52,13 @@ public final class MiningLevels extends JavaPlugin {
                 MiningLevel.init();
                 MiningPlayer.init();
                 MiningBlock.init();
+
+                //Register Placeholders
+                if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                    log("PlaceholderAPI found. Registering Placeholders.");
+                    new LevelPlaceholders().register();
+                }
+
                 registerCommand("mininglevels", new MiningLevelsCommandListener());
                 registerCommand("miningrewards", new RewardCommandListener());
                 registerEvents(new MiningEvents(), new ServerEvents());

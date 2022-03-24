@@ -3,7 +3,7 @@ version: '${project.version}'
 main: de.chafficplugins.mininglevels.MiningLevels
 api-version: 1.15
 prefix: MiningLevels
-softdepend: [ CrucialAPI ]
+softdepend: [ CrucialAPI, PlaceholderAPI ]
 authors: [ ChafficPlugins ]
 description: An easily configurable advanced mining level system.
 commands:
