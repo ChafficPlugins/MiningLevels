@@ -17,6 +17,7 @@ public class LevelingCommands {
                     if(level >= 0 && level < MiningLevel.miningLevels.size()) {
                         miningPlayer.setLevel(level);
                         player.sendMessage("You are now level " + level + ".");
+                        return;
                     }
                 }
             } else {
@@ -37,6 +38,7 @@ public class LevelingCommands {
                     if(xp >= 0) {
                         miningPlayer.changeXp(xp);
                         player.sendMessage("You got " + xp + " xp.");
+                        return;
                     }
                 }
             } else {
@@ -54,6 +56,7 @@ public class LevelingCommands {
                 MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
                 if(miningPlayer != null) {
                     sender.sendMessage(player.getDisplayName() + " is level " + miningPlayer.getLevel().getName());
+                    return;
                 }
             } else {
                 sender.sendMessage("Player " + args[1] + " does not exist.");
