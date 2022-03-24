@@ -94,6 +94,8 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                         if(hasOnePermissions(sender, "mininglevels.setxp")) sender.sendMessage("§a/mininglevels setxp <player> <xp>");
                         if(hasOnePermissions(sender, "mininglevels.level")) sender.sendMessage("§a/mininglevels level <player>");
                         if(hasOnePermissions(sender, "mininglevels.reload")) sender.sendMessage("§a/mininglevels reload");
+                        if(hasOnePermissions(sender, "mininglevels.editor")) sender.sendMessage("§a/mininglevels leveleditor");
+                        if(hasOnePermissions(sender, "mininglevels.editor")) sender.sendMessage("§a/mininglevels blockeditor");
                         return true;
                     }
                 }
