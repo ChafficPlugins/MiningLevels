@@ -15,7 +15,9 @@ import org.bukkit.entity.Player;
 
 import java.io.IOException;
 
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 import static de.chafficplugins.mininglevels.utils.SenderUtils.hasOnePermissions;
+import static de.chafficplugins.mininglevels.utils.SenderUtils.sendMessage;
 
 public class MiningLevelsCommandListener implements CommandExecutor {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
@@ -26,7 +28,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                 switch (args[0]) {
                     case "setlevel" -> {
                         if(!hasOnePermissions(sender, "mininglevels.setlevel")) {
-                            sender.sendMessage("§cYou don't have the permission to do this!");
+                            sendMessage(sender, NO_PERMISSION);
                             return true;
                         }
                         LevelingCommands.setLevel(sender, args);
@@ -34,7 +36,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                     }
                     case "setxp" -> {
                         if(!hasOnePermissions(sender, "mininglevels.setxp")) {
-                            sender.sendMessage("§cYou don't have the permission to do this!");
+                            sendMessage(sender, NO_PERMISSION);
                             return true;
                         }
                         LevelingCommands.setXP(sender, args);
@@ -42,7 +44,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                     }
                     case "level" -> {
                         if(!hasOnePermissions(sender, "mininglevels.level")) {
-                            sender.sendMessage("§cYou don't have the permission to do this!");
+                            sendMessage(sender, NO_PERMISSION);
                             return true;
                         }
                         LevelingCommands.level(sender, args);
@@ -50,17 +52,17 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                     }
                     case "reload" -> {
                         if(!hasOnePermissions(sender, "mininglevels.reload")) {
-                            sender.sendMessage("§cYou don't have the permission to do this!");
+                            sendMessage(sender, NO_PERMISSION);
                             return true;
                         }
                         try {
                             MiningLevel.reload();
                             MiningBlock.reload();
                             MiningPlayer.reload();
-                            sender.sendMessage("§aSuccessfully reloaded!");
+                            sendMessage(sender, RELOAD_SUCCESSFUL);
                         } catch (IOException e) {
                             e.printStackTrace();
-                            sender.sendMessage("§cAn error occurred while reloading!");
+                            sendMessage(sender, ERROR_OCCURRED);
                         }
                         return true;
                     }
@@ -70,29 +72,29 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                     }
                     case "self" -> {
                         if(!(sender instanceof Player)) {
-                            sender.sendMessage("§cYou can't use this command from console!");
+                            sendMessage(sender, NO_PERMISSION);
                             return true;
                         }
                         return showLevelInfo(sender);
                     }
                     case "leveleditor" -> {
                         if(!hasOnePermissions(sender, "mininglevels.editor")) {
-                            sender.sendMessage("§cYou don't have the permission to do this!");
+                            sendMessage(sender, NO_PERMISSION);
                             return true;
                         }
                         if(!(sender instanceof Player)) {
-                            sender.sendMessage("§cYou can't use this command from console!");
+                            sendMessage(sender, NO_CONSOLE_COMMAND);
                             return true;
                         }
                         LevelList.getInstance().open((Player) sender);
                     }
                     case "blockeditor" -> {
                         if(!hasOnePermissions(sender, "mininglevels.editor")) {
-                            sender.sendMessage("§cYou don't have the permission to do this!");
+                            sendMessage(sender, NO_PERMISSION);
                             return true;
                         }
                         if(!(sender instanceof Player)) {
-                            sender.sendMessage("§cYou can't use this command from console!");
+                            sendMessage(sender, NO_CONSOLE_COMMAND);
                             return true;
                         }
                         BlockList.getInstance().open((Player) sender);
@@ -123,17 +125,17 @@ public class MiningLevelsCommandListener implements CommandExecutor {
         Player player = (Player) sender;
         MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
         if(miningPlayer == null) {
-            sender.sendMessage("§cAn error occurred. Please rejoin the server!");
+            sendMessage(sender, ERROR_OCCURRED);
             return true;
         }
         MiningLevel level = miningPlayer.getLevel();
 
-        player.sendMessage("§aYour current level is §c" + miningPlayer.getLevel().getName());
-        player.sendMessage("§aYour current XP is: §c[" + miningPlayer.getXp() + "/" + level.getNextLevelXP() + "]");
-        player.sendMessage(ChatColor.WHITE + "Haste Level: " + ChatColor.GREEN + level.getHasteLevel());
-        player.sendMessage(ChatColor.WHITE + "Extra ore probability: " + ChatColor.GREEN + level.getExtraOreProbability());
-        player.sendMessage(ChatColor.WHITE + "Max. extra ore amount: " + ChatColor.GREEN + level.getMaxExtraOre());
-        player.sendMessage(ChatColor.WHITE + "Instant break probability: " + ChatColor.GREEN + level.getInstantBreakProbability());
+        sendMessage(player, CURRENT_LEVEL, miningPlayer.getLevel().getName());
+        sendMessage(player, CURRENT_XP, String.valueOf(miningPlayer.getXp()), String.valueOf(level.getNextLevelXP()));
+        sendMessage(player, CURRENT_HASTE_LEVEL, String.valueOf(level.getHasteLevel()));
+        sendMessage(player, CURRENT_EXTRA_ORE_LEVEL, String.valueOf(level.getExtraOreProbability()));
+        sendMessage(player, CURRENT_MAX_EXTRA_ORE, String.valueOf(level.getMaxExtraOre()));
+        sendMessage(player, CURRENT_INSTANT_BREAK_LEVEL, String.valueOf(level.getInstantBreakProbability()));
         return true;
     }
 }

@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.CANT_DELETE_LEVEL;
+import static de.chafficplugins.mininglevels.utils.SenderUtils.sendMessage;
+
 public class LevelEdit extends Page {
     private final MiningLevel level;
 
@@ -102,7 +105,7 @@ public class LevelEdit extends Page {
                 LevelList.getInstance().open(inventoryClick.getPlayer());
             } else {
                 inventoryClick.getPlayer().playSound(inventoryClick.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
-                inventoryClick.getPlayer().sendMessage(ChatColor.RED + "You can't delete a level that isn't the last one!");
+                sendMessage(inventoryClick.getPlayer(), CANT_DELETE_LEVEL, ChatColor.RED);
             }
         }));
         //45 back button

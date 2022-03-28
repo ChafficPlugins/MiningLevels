@@ -4,12 +4,14 @@ import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
 import de.chafficplugins.mininglevels.io.FileManager;
+import de.chafficplugins.mininglevels.io.MessagesYaml;
 import de.chafficplugins.mininglevels.listeners.MiningLevelsCommandListener;
 import de.chafficplugins.mininglevels.listeners.RewardCommandListener;
 import de.chafficplugins.mininglevels.listeners.events.MiningEvents;
 import de.chafficplugins.mininglevels.listeners.events.ServerEvents;
 import de.chafficplugins.mininglevels.placeholders.LevelPlaceholders;
 import de.chafficplugins.mininglevels.utils.Crucial;
+import de.chafficplugins.mininglevels.utils.CustomMessages;
 import io.github.chafficui.CrucialAPI.Utils.Server;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
 import org.bukkit.Bukkit;
@@ -24,8 +26,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Logger;
 
-import static de.chafficplugins.mininglevels.utils.ConfigStrings.BSTATS_ID;
-import static de.chafficplugins.mininglevels.utils.ConfigStrings.LVL_UP_SOUND;
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 
 public final class MiningLevels extends JavaPlugin {
     private final Logger logger = Logger.getLogger("MiningLevels");
@@ -58,6 +59,10 @@ public final class MiningLevels extends JavaPlugin {
                     log("PlaceholderAPI found. Registering Placeholders.");
                     new LevelPlaceholders().register();
                 }
+
+                //Init localizations
+                MessagesYaml.create();
+                new CustomMessages();
 
                 registerCommand("mininglevels", new MiningLevelsCommandListener());
                 registerCommand("miningrewards", new RewardCommandListener());
@@ -103,6 +108,9 @@ public final class MiningLevels extends JavaPlugin {
     private void loadConfig() {
         //getConfig().addDefault(AUTO_UPDATE, true);
         getConfig().addDefault(LVL_UP_SOUND, Sound.ENTITY_PLAYER_LEVELUP.name());
+        getConfig().addDefault(MAX_LEVEL_XP_DROPS, false);
+        getConfig().addDefault(LEVEL_WITH_PLAYER_PLACED_BLOCKS, false);
+        getConfig().addDefault("language", "CUSTOM");
         getConfig().options().copyDefaults(true);
         saveConfig();
 

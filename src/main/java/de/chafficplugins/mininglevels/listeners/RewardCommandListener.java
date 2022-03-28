@@ -1,10 +1,14 @@
 package de.chafficplugins.mininglevels.listeners;
 
 import de.chafficplugins.mininglevels.api.MiningPlayer;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
+import static de.chafficplugins.mininglevels.utils.SenderUtils.sendMessage;
 
 public class RewardCommandListener  implements CommandExecutor {
     @Override
@@ -17,13 +21,13 @@ public class RewardCommandListener  implements CommandExecutor {
                     return true;
                 }
                 switch (miningPlayer.claim()) {
-                    case 0 -> player.sendMessage("§aThere are no rewards to claim!");
-                    case 1 -> player.sendMessage("§aYou have claimed all rewards!");
-                    case 2 -> player.sendMessage("§aThere is not enough space in you inventory to claim all rewards!");
+                    case 0 -> sendMessage(player, NO_REWARDS, ChatColor.RED);
+                    case 1 -> sendMessage(player, REWARDS_CLAIMED, ChatColor.GREEN);
+                    case 2 -> sendMessage(player, NO_MORE_SPACE, ChatColor.YELLOW);
                 }
                 return true;
             } else {
-                sender.sendMessage("§cYou can only use this command as a player!");
+                sendMessage(sender, NO_CONSOLE_COMMAND);
             }
         }
         return false;
