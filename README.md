@@ -1,4 +1,4 @@
-[![User Wiki](https://img.shields.io/badge/Wiki-Users-blue)](https://github.com/ChafficPlugins/MiningLevels/wiki) [![Download](https://img.shields.io/badge/Download-v1.0.0-red)](https://github.com/ChafficPlugins/MiningLevels/releases/latest) [![Discord](https://img.shields.io/badge/Discord-Join-blue)](https://discord.gg/RYFamQzkcB)
+[![User Wiki](https://img.shields.io/badge/Wiki-Users-blue)](https://github.com/ChafficPlugins/MiningLevels/wiki) [![Download](https://img.shields.io/badge/Download-v1.1.2-red)](https://github.com/ChafficPlugins/MiningLevels/releases/latest) [![Discord](https://img.shields.io/badge/Discord-Join-blue)](https://discord.gg/RYFamQzkcB)
 
 # MiningLevels
 
