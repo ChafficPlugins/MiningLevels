@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.MAX_LEVEL_XP_DROPS;
+
 /**
  * @author Chaffic
  * @since 1.0.0
@@ -25,6 +27,7 @@ import java.util.UUID;
  * Contains a player's mining level, its xp and unclaimed rewards.
  */
 public class MiningPlayer {
+    private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
 
     /**
      * The bukkit player's uuid.
@@ -103,6 +106,7 @@ public class MiningPlayer {
      * @param xp The amount of xp to alter the players xp by.
      */
     public void alterXp(int xp) {
+        if(level == MiningLevel.getMaxLevel().getOrdinal() && plugin.getConfigBoolean(MAX_LEVEL_XP_DROPS)) return;
         this.xp += xp;
         xpChange();
     }

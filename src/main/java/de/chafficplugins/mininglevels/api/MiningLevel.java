@@ -337,4 +337,12 @@ public class MiningLevel {
         }
         return itemStack.getType().name();
     }
+
+    /**
+     * A method to get the maximum level
+     * @return The maximum level
+     */
+    public static MiningLevel getMaxLevel() {
+        return MiningLevel.miningLevels.get(MiningLevel.miningLevels.size() - 1);
+    }
 }

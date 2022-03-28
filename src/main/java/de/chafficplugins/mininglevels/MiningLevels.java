@@ -24,8 +24,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Logger;
 
-import static de.chafficplugins.mininglevels.utils.ConfigStrings.BSTATS_ID;
-import static de.chafficplugins.mininglevels.utils.ConfigStrings.LVL_UP_SOUND;
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 
 public final class MiningLevels extends JavaPlugin {
     private final Logger logger = Logger.getLogger("MiningLevels");
@@ -103,6 +102,7 @@ public final class MiningLevels extends JavaPlugin {
     private void loadConfig() {
         //getConfig().addDefault(AUTO_UPDATE, true);
         getConfig().addDefault(LVL_UP_SOUND, Sound.ENTITY_PLAYER_LEVELUP.name());
+        getConfig().addDefault(MAX_LEVEL_XP_DROPS, false);
         getConfig().options().copyDefaults(true);
         saveConfig();
 
