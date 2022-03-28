@@ -33,7 +33,7 @@ public final class MiningLevels extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        Crucial.download();
+        Crucial.init();
     }
 
     @Override

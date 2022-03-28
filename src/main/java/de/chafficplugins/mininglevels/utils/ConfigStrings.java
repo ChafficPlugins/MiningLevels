@@ -3,7 +3,7 @@ package de.chafficplugins.mininglevels.utils;
 public class ConfigStrings {
     public final static int SPIGOT_ID = 100886;
     public final static int BSTATS_ID = 14709;
-    public final static String CRUCIAL_API_VERSION = "2.1.1";
+    public final static String CRUCIAL_API_VERSION = "2.1.2";
 
     public final static String DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=";
     public final static String MINING_LEVELS_JSON = "145W6qtWM2-PA3vyDlOpa3nnYrn0bUVyb";
