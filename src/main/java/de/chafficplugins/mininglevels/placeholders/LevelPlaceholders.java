@@ -44,6 +44,18 @@ public class LevelPlaceholders extends PlaceholderExpansion {
             case "xp_needed" -> {
                 return String.valueOf(miningPlayer.getLevel().getNextLevelXP());
             }
+            case "extra_ore_probability" -> {
+                return String.valueOf(miningPlayer.getLevel().getExtraOreProbability());
+            }
+            case "max_extra_ore" -> {
+                return String.valueOf(miningPlayer.getLevel().getMaxExtraOre());
+            }
+            case "instant_break_probability" -> {
+                return String.valueOf(miningPlayer.getLevel().getInstantBreakProbability());
+            }
+            case "haste_level" -> {
+                return String.valueOf(miningPlayer.getLevel().getHasteLevel());
+            }
             default -> {
                 return null;
             }
