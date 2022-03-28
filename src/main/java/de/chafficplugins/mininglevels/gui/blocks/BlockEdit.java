@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.ONLY_BLOCKS_ALLOWED;
+import static de.chafficplugins.mininglevels.utils.SenderUtils.sendMessage;
+
 public class BlockEdit extends Page {
     private final MiningBlock block;
 
@@ -86,7 +89,7 @@ public class BlockEdit extends Page {
                     if(item.getType().isBlock()) {
                         blocks.add(item);
                     } else {
-                        inventoryClick.getPlayer().sendMessage(ChatColor.RED + "You can only add blocks to the materials list.");
+                        sendMessage(inventoryClick.getPlayer(),  ONLY_BLOCKS_ALLOWED, ChatColor.RED);
                         inventoryClick.getPlayer().playSound(inventoryClick.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
                     }
                 }

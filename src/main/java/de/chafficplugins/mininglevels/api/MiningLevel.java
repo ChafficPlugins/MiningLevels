@@ -13,6 +13,10 @@ import org.bukkit.inventory.ItemStack;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
+import static de.chafficplugins.mininglevels.utils.SenderUtils.sendActionBar;
+import static de.chafficplugins.mininglevels.utils.SenderUtils.sendMessage;
+
 /**
  * @author Chaffic
  * @since 1.0.0
@@ -226,9 +230,9 @@ public class MiningLevel {
         MiningLevel nextLevel = getNext();
         miningPlayer.setLevel(nextLevel);
         player.playSound(player.getLocation(), MiningLevels.lvlUpSound, 1, 1);
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "Your Mininglevel is now " + nextLevel.name + "!"));
+        sendActionBar(player, NEW_LEVEL, ChatColor.GREEN, nextLevel.name);
 
-        player.sendMessage(ChatColor.WHITE + "Level " + ChatColor.GREEN + nextLevel.name + ChatColor.WHITE + " unlocked!");
+        sendMessage(player, LEVEL_UNLOCKED, ChatColor.WHITE, ChatColor.GREEN + nextLevel.name + ChatColor.WHITE);
         player.sendMessage(ChatColor.WHITE + "-------------");
 
         //print all skill changes
@@ -236,28 +240,20 @@ public class MiningLevel {
         double nextInstantBreakProbability = nextLevel.getInstantBreakProbability();
         double nextExtraOreProbability = nextLevel.getExtraOreProbability();
         double nextMaxExtraOre = nextLevel.getMaxExtraOre();
-        if(nextHasteLevel != hasteLevel) {
-            player.sendMessage(ChatColor.WHITE + "Haste Level: " + ChatColor.YELLOW + hasteLevel + ChatColor.WHITE + " -> " + ChatColor.GREEN + nextHasteLevel);
-        }
-        if(nextInstantBreakProbability != instantBreakProbability) {
-            player.sendMessage(ChatColor.WHITE + "Instant Break Probability: " + ChatColor.YELLOW + instantBreakProbability + ChatColor.WHITE + " -> " + ChatColor.GREEN + nextInstantBreakProbability);
-        }
-        if(nextExtraOreProbability != extraOreProbability) {
-            player.sendMessage(ChatColor.WHITE + "Extra Ore Probability: " + ChatColor.YELLOW + extraOreProbability + ChatColor.WHITE + " -> " + ChatColor.GREEN + nextExtraOreProbability);
-        }
-        if(nextMaxExtraOre != maxExtraOre) {
-            player.sendMessage(ChatColor.WHITE + "Max Extra Ore: " + ChatColor.YELLOW + maxExtraOre + ChatColor.WHITE + " -> " + ChatColor.GREEN + nextMaxExtraOre);
-        }
+        sendUpgrade(player, hasteLevel, nextHasteLevel, HASTELVL_CHANGE);
+        sendUpgrade(player, instantBreakProbability, nextInstantBreakProbability, INSTANT_BREAK_CHANGE);
+        sendUpgrade(player, extraOreProbability, nextExtraOreProbability, EXTRA_ORE_CHANGE);
+        sendUpgrade(player, maxExtraOre, nextMaxExtraOre, MAX_EXTRA_ORE_CHANGE);
 
         //tell the player all rewards
         if(nextLevel.rewards != null && nextLevel.rewards.size() > 0) {
             player.sendMessage("");
-            player.sendMessage(ChatColor.WHITE + "Rewards: ");
+            sendMessage(player, REWARDS_LIST, ChatColor.WHITE);
             for (ItemStack reward : nextLevel.rewards) {
                 player.sendMessage(ChatColor.WHITE + "  " + ChatColor.YELLOW + getName(reward) + ChatColor.WHITE + ": " + ChatColor.GREEN + reward.getAmount());
             }
             miningPlayer.addRewards(nextLevel.getRewards());
-            player.sendMessage("Claim your rewards with /miningrewards");
+            sendMessage(player, CLAIM_YOUR_REWARD, ChatColor.WHITE);
         }
 
         //perform all commands
@@ -265,6 +261,12 @@ public class MiningLevel {
             for (String command : nextLevel.commands) {
                 player.performCommand(command);
             }
+        }
+    }
+
+    private static void sendUpgrade(Player player, double next, double now, String key) {
+        if(next != now) {
+            sendMessage(player, key, ChatColor.WHITE, ChatColor.YELLOW + String.valueOf(now) + ChatColor.WHITE, ChatColor.GREEN + String.valueOf(next));
         }
     }
 

@@ -19,7 +19,9 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.LEVEL_NEEDED;
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.LEVEL_WITH_PLAYER_PLACED_BLOCKS;
+import static de.chafficplugins.mininglevels.utils.SenderUtils.sendActionBar;
 
 public class MiningEvents implements Listener {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
@@ -32,14 +34,19 @@ public class MiningEvents implements Listener {
             final MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(event.getPlayer().getUniqueId());
             if(miningPlayer != null) {
                 if(miningPlayer.getLevel().getOrdinal() < block.getMinLevel()) {
-                    event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Level " + block.getMinLevel() + " needed!"));
+                    MiningLevel level = MiningLevel.get(block.getMinLevel());
+                    if(level == null) return;
+                    sendActionBar(event.getPlayer(), LEVEL_NEEDED, ChatColor.RED, level.getName());
                     event.setCancelled(true);
                 } else {
-                    if(miningPlayer.getLevel().getHasteLevel() > 0) {
-                        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 5*20, miningPlayer.getLevel().getHasteLevel()));
-                    }
-                    if(MathUtils.randomDouble(0,100) < miningPlayer.getLevel().getInstantBreakProbability()) {
-                        event.setInstaBreak(true); //Insta break
+                    //check if the block was placed by a player
+                    if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !playerPlacedBlock.contains(event.getBlock())) {
+                        if(miningPlayer.getLevel().getHasteLevel() > 0) {
+                            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 5*20, miningPlayer.getLevel().getHasteLevel()));
+                        }
+                        if(MathUtils.randomDouble(0,100) < miningPlayer.getLevel().getInstantBreakProbability()) {
+                            event.setInstaBreak(true); //Insta break
+                        }
                     }
                 }
             } else {
@@ -58,10 +65,10 @@ public class MiningEvents implements Listener {
                     event.setCancelled(true);
                     MiningLevel level = MiningLevel.get(block.getMinLevel());
                     if(level == null) return;
-                    event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Level " + level.getName() + " needed!"));
+                    sendActionBar(event.getPlayer(), LEVEL_NEEDED, ChatColor.RED, level.getName());
                 } else {
                     //check if the block was placed by a player
-                    if(!plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !playerPlacedBlock.contains(event.getBlock())) {
+                    if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !playerPlacedBlock.contains(event.getBlock())) {
                         miningPlayer.alterXp(block.getXp());
                         MiningLevel level = miningPlayer.getLevel();
                         if(MathUtils.randomDouble(0,100) < level.getExtraOreProbability()) {
@@ -80,7 +87,7 @@ public class MiningEvents implements Listener {
 
     @EventHandler
     public void onBlockPlace(final BlockPlaceEvent event) {
-        if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS)) {
+        if(!plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS)) {
             final MiningBlock block = MiningBlock.getMiningBlock(event.getBlock().getType());
             if(block != null) {
                 playerPlacedBlock.add(event.getBlock());
