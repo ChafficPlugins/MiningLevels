@@ -20,4 +20,5 @@ public class ConfigStrings {
     //Configuration
     public final static String LVL_UP_SOUND = "levelup_sound";
     public final static String MAX_LEVEL_XP_DROPS = "max_level_xp_drops";
+    public final static String LEVEL_WITH_PLAYER_PLACED_BLOCKS = "level_with_player_placed_blocks";
 }

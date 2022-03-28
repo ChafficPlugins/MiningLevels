@@ -1,5 +1,6 @@
 package de.chafficplugins.mininglevels.listeners.events;
 
+import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
@@ -12,10 +13,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.LEVEL_WITH_PLAYER_PLACED_BLOCKS;
+
 public class MiningEvents implements Listener {
+    private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
+    private static final ArrayList<Block> playerPlacedBlock = new ArrayList<>();
 
     @EventHandler
     public void onBlockDamage(final BlockDamageEvent event) {
@@ -52,17 +60,30 @@ public class MiningEvents implements Listener {
                     if(level == null) return;
                     event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Level " + level.getName() + " needed!"));
                 } else {
-                    miningPlayer.alterXp(block.getXp());
-                    MiningLevel level = miningPlayer.getLevel();
-                    if(MathUtils.randomDouble(0,100) < level.getExtraOreProbability()) {
-                        Block actualBlock = event.getBlock();
-                        for (int i = 0; i < (int) MathUtils.randomDouble(1, level.getMaxExtraOre()); i++) {
-                            event.getPlayer().getWorld().dropItemNaturally(actualBlock.getLocation(), actualBlock.getDrops().iterator().next());
+                    //check if the block was placed by a player
+                    if(!plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !playerPlacedBlock.contains(event.getBlock())) {
+                        miningPlayer.alterXp(block.getXp());
+                        MiningLevel level = miningPlayer.getLevel();
+                        if(MathUtils.randomDouble(0,100) < level.getExtraOreProbability()) {
+                            Block actualBlock = event.getBlock();
+                            for (int i = 0; i < (int) MathUtils.randomDouble(1, level.getMaxExtraOre()); i++) {
+                                event.getPlayer().getWorld().dropItemNaturally(actualBlock.getLocation(), actualBlock.getDrops().iterator().next());
+                            }
                         }
                     }
                 }
             } else {
                 event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBlockPlace(final BlockPlaceEvent event) {
+        if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS)) {
+            final MiningBlock block = MiningBlock.getMiningBlock(event.getBlock().getType());
+            if(block != null) {
+                playerPlacedBlock.add(event.getBlock());
             }
         }
     }

@@ -103,6 +103,7 @@ public final class MiningLevels extends JavaPlugin {
         //getConfig().addDefault(AUTO_UPDATE, true);
         getConfig().addDefault(LVL_UP_SOUND, Sound.ENTITY_PLAYER_LEVELUP.name());
         getConfig().addDefault(MAX_LEVEL_XP_DROPS, false);
+        getConfig().addDefault(LEVEL_WITH_PLAYER_PLACED_BLOCKS, false);
         getConfig().options().copyDefaults(true);
         saveConfig();
 
