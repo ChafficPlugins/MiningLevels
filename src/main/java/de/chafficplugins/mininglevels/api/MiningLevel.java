@@ -48,7 +48,7 @@ public class MiningLevel {
     /**
      * The maximum amount of dropped extra ores a player with this MiningLevel can receive.
      */
-    private float maxExtraOre = 0;
+    private int maxExtraOre = 0;
     /**
      * The hasteLevel a player will receive when damaging a MiningBlock with this MiningLevel.
      */
@@ -164,14 +164,14 @@ public class MiningLevel {
     /**
      * @return The maximum amount of dropped extra ores a player with this mining level can receive.
      */
-    public float getMaxExtraOre() {
+    public int getMaxExtraOre() {
         return maxExtraOre;
     }
 
     /**
      * Sets the maximum amount of dropped extra ores a player with this mining level can receive.
      */
-    public void setMaxExtraOre(float maxExtraOre) {
+    public void setMaxExtraOre(int maxExtraOre) {
         if(maxExtraOre < 0) {
             return;
         }
