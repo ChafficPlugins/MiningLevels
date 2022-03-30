@@ -56,6 +56,8 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                             return true;
                         }
                         try {
+                            plugin.customMessages.reloadYaml();
+                            plugin.reloadConfig();
                             MiningLevel.reload();
                             MiningBlock.reload();
                             MiningPlayer.reload();

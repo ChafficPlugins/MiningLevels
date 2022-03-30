@@ -1,7 +1,6 @@
 package de.chafficplugins.mininglevels.io;
 
 import de.chafficplugins.mininglevels.MiningLevels;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

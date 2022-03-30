@@ -31,6 +31,7 @@ import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 public final class MiningLevels extends JavaPlugin {
     private final Logger logger = Logger.getLogger("MiningLevels");
     public FileManager fileManager;
+    public CustomMessages customMessages;
 
     @Override
     public void onLoad() {
@@ -62,7 +63,7 @@ public final class MiningLevels extends JavaPlugin {
 
                 //Init localizations
                 MessagesYaml.create();
-                new CustomMessages();
+                customMessages = new CustomMessages();
 
                 registerCommand("mininglevels", new MiningLevelsCommandListener());
                 registerCommand("miningrewards", new RewardCommandListener());
