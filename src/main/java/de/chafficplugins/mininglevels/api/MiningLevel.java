@@ -264,7 +264,7 @@ public class MiningLevel {
         }
     }
 
-    private static void sendUpgrade(Player player, double next, double now, String key) {
+    private static void sendUpgrade(Player player, double now, double next, String key) {
         if(next != now) {
             sendMessage(player, key, ChatColor.WHITE, ChatColor.YELLOW + String.valueOf(now) + ChatColor.WHITE, ChatColor.GREEN + String.valueOf(next));
         }
