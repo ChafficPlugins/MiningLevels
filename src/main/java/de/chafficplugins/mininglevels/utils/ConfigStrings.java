@@ -6,7 +6,7 @@ public class ConfigStrings {
     public final static String CRUCIAL_API_VERSION = "2.1.3";
     public final static String LOCALIZED_IDENTIFIER = "mininglevels";
 
-    public final static String PREFIX = "§8[§6ML§8] §r";
+    public static String PREFIX = "§8[§6ML§8] §r";
 
     public final static String DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=";
     public final static String MINING_LEVELS_JSON = "145W6qtWM2-PA3vyDlOpa3nnYrn0bUVyb";

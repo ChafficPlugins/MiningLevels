@@ -8,12 +8,14 @@ import de.chafficplugins.mininglevels.gui.blocks.BlockList;
 import de.chafficplugins.mininglevels.gui.levels.LevelList;
 import de.chafficplugins.mininglevels.listeners.commands.LevelingCommands;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 import static de.chafficplugins.mininglevels.utils.SenderUtils.hasOnePermissions;
@@ -61,6 +63,12 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                             MiningLevel.reload();
                             MiningBlock.reload();
                             MiningPlayer.reload();
+                            try {
+                                MiningLevels.lvlUpSound = Sound.valueOf(plugin.getConfigString(LVL_UP_SOUND).toUpperCase(Locale.ROOT));
+                            } catch (NullPointerException | IllegalArgumentException e) {
+                                plugin.error("Config value levelup sound is either misspelled or missing! Using ENTITY_PLAYER_LEVELUP");
+                            }
+                            PREFIX = plugin.getConfigString("prefix");
                             sendMessage(sender, RELOAD_SUCCESSFUL);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -103,6 +111,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                     }
                     default -> {
                         sender.sendMessage("§a/mininglevels");
+                        sender.sendMessage("§a/mininglevels help");
                         sender.sendMessage("§a/mininglevels info");
                         sender.sendMessage("§a/mininglevels self");
                         sender.sendMessage("§a/miningrewards");
@@ -116,7 +125,11 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                     }
                 }
             } else {
-                return showLevelInfo(sender);
+                if(sender instanceof Player) {
+                    return showLevelInfo(sender);
+                } else {
+                    sender.sendMessage("§a/mininglevels help");
+                }
             }
             return true;
         }

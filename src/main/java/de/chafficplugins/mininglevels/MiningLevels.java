@@ -10,6 +10,7 @@ import de.chafficplugins.mininglevels.listeners.RewardCommandListener;
 import de.chafficplugins.mininglevels.listeners.events.MiningEvents;
 import de.chafficplugins.mininglevels.listeners.events.ServerEvents;
 import de.chafficplugins.mininglevels.placeholders.LevelPlaceholders;
+import de.chafficplugins.mininglevels.utils.ConfigStrings;
 import de.chafficplugins.mininglevels.utils.Crucial;
 import de.chafficplugins.mininglevels.utils.CustomMessages;
 import io.github.chafficui.CrucialAPI.Utils.Server;
@@ -112,6 +113,7 @@ public final class MiningLevels extends JavaPlugin {
         getConfig().addDefault(MAX_LEVEL_XP_DROPS, false);
         getConfig().addDefault(LEVEL_WITH_PLAYER_PLACED_BLOCKS, false);
         getConfig().addDefault(LEVEL_WITH_GENERATED_BLOCKS, false);
+        getConfig().addDefault("prefix", "§8[§6ML§8] §r");
         getConfig().addDefault("language", "CUSTOM");
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -121,6 +123,7 @@ public final class MiningLevels extends JavaPlugin {
         } catch (NullPointerException | IllegalArgumentException e) {
             error("Config value levelup sound is either misspelled or missing! Using ENTITY_PLAYER_LEVELUP");
         }
+        PREFIX = getConfigString("prefix");
     }
 
     public boolean getConfigBoolean(String path) {
