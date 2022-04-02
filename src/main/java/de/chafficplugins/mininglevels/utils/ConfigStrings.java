@@ -23,7 +23,8 @@ public class ConfigStrings {
     //Configuration
     public final static String LVL_UP_SOUND = "levelup_sound";
     public final static String MAX_LEVEL_XP_DROPS = "max_level_xp_drops";
-    public final static String LEVEL_WITH_PLAYER_PLACED_BLOCKS = "level_with_player_placed_blocks";
+    public final static String LEVEL_WITH_PLAYER_PLACED_BLOCKS = "level_with.player_placed_blocks";
+    public final static String LEVEL_WITH_GENERATED_BLOCKS = "level_with.generated_blocks";
 
     //Messages
     public final static String NO_PERMISSION = "no_permission";

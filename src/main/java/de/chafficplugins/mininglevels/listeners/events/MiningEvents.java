@@ -5,27 +5,23 @@ import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
 import de.chafficplugins.mininglevels.utils.MathUtils;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDamageEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
-import static de.chafficplugins.mininglevels.utils.ConfigStrings.LEVEL_NEEDED;
-import static de.chafficplugins.mininglevels.utils.ConfigStrings.LEVEL_WITH_PLAYER_PLACED_BLOCKS;
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 import static de.chafficplugins.mininglevels.utils.SenderUtils.sendActionBar;
 
 public class MiningEvents implements Listener {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
-    private static final ArrayList<Block> playerPlacedBlock = new ArrayList<>();
+    private static final ArrayList<Block> noXpBlocks = new ArrayList<>();
 
     @EventHandler
     public void onBlockDamage(final BlockDamageEvent event) {
@@ -40,7 +36,7 @@ public class MiningEvents implements Listener {
                     event.setCancelled(true);
                 } else {
                     //check if the block was placed by a player
-                    if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !playerPlacedBlock.contains(event.getBlock())) {
+                    if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !noXpBlocks.contains(event.getBlock())) {
                         if(miningPlayer.getLevel().getHasteLevel() > 0) {
                             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 5*20, miningPlayer.getLevel().getHasteLevel()));
                         }
@@ -68,7 +64,7 @@ public class MiningEvents implements Listener {
                     sendActionBar(event.getPlayer(), LEVEL_NEEDED, ChatColor.RED, level.getName());
                 } else {
                     //check if the block was placed by a player
-                    if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !playerPlacedBlock.contains(event.getBlock())) {
+                    if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !noXpBlocks.contains(event.getBlock())) {
                         miningPlayer.alterXp(block.getXp());
                         MiningLevel level = miningPlayer.getLevel();
                         if(MathUtils.randomDouble(0,100) < level.getExtraOreProbability()) {
@@ -90,7 +86,18 @@ public class MiningEvents implements Listener {
         if(!plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS)) {
             final MiningBlock block = MiningBlock.getMiningBlock(event.getBlock().getType());
             if(block != null) {
-                playerPlacedBlock.add(event.getBlock());
+                noXpBlocks.add(event.getBlock());
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBlockGenerated(final BlockFormEvent event) {
+        if(!plugin.getConfigBoolean(LEVEL_WITH_GENERATED_BLOCKS)) {;
+            final MiningBlock block = MiningBlock.getMiningBlock(event.getNewState().getType());
+            System.out.println(event.getNewState().getType());
+            if(block != null) {
+                noXpBlocks.add(event.getBlock());
             }
         }
     }
