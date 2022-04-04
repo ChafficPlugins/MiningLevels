@@ -17,7 +17,6 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
-import static de.chafficplugins.mininglevels.utils.SenderUtils.sendActionBar;
 
 public class MiningEvents implements Listener {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
@@ -34,7 +33,7 @@ public class MiningEvents implements Listener {
                     if(level == null) return;
                     miningPlayer.showMessage(LEVEL_NEEDED, ChatColor.RED, level.getName());
                     event.setCancelled(true);
-                } else {
+                } else if(isMiningItem(event.getItemInHand().getType())) {
                     //check if the block was placed by a player
                     if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !noXpBlocks.contains(event.getBlock())) {
                         if(miningPlayer.getLevel().getHasteLevel() > 0) {
@@ -49,6 +48,10 @@ public class MiningEvents implements Listener {
                 event.setCancelled(true);
             }
         }
+    }
+
+    private boolean isMiningItem(final Material material) {
+        return plugin.getConfig().getStringList(MINING_ITEMS).contains(material.name());
     }
 
     @EventHandler
@@ -67,7 +70,7 @@ public class MiningEvents implements Listener {
                     if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !noXpBlocks.contains(event.getBlock())) {
                         miningPlayer.alterXp(block.getXp());
                         MiningLevel level = miningPlayer.getLevel();
-                        if(MathUtils.randomDouble(0,100) < level.getExtraOreProbability()) {
+                        if(event.getPlayer().getItemInUse() != null && isMiningItem(event.getPlayer().getItemInUse().getType()) && MathUtils.randomDouble(0,100) < level.getExtraOreProbability()) {
                             Block actualBlock = event.getBlock();
                             for (int i = 0; i < (int) MathUtils.randomDouble(1, level.getMaxExtraOre()); i++) {
                                 event.getPlayer().getWorld().dropItemNaturally(actualBlock.getLocation(), actualBlock.getDrops().iterator().next());

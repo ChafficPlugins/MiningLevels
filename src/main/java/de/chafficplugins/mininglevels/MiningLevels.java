@@ -17,6 +17,7 @@ import io.github.chafficui.CrucialAPI.Utils.Server;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -114,6 +115,14 @@ public final class MiningLevels extends JavaPlugin {
         getConfig().addDefault(LEVEL_WITH_PLAYER_PLACED_BLOCKS, false);
         getConfig().addDefault(LEVEL_WITH_GENERATED_BLOCKS, false);
         getConfig().addDefault(LEVEL_PROGRESSION_MESSAGES, "actionBar");
+        getConfig().addDefault(MINING_ITEMS, new String[]{
+                Material.DIAMOND_PICKAXE.name(),
+                Material.GOLDEN_PICKAXE.name(),
+                Material.IRON_PICKAXE.name(),
+                Material.STONE_PICKAXE.name(),
+                Material.WOODEN_PICKAXE.name(),
+                Material.NETHERITE_PICKAXE.name()
+        });
         getConfig().addDefault("prefix", "§8[§6ML§8] §r");
         getConfig().addDefault("language", "CUSTOM");
         getConfig().options().copyDefaults(true);
