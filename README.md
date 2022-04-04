@@ -1,4 +1,4 @@
-[![User Wiki](https://img.shields.io/badge/Wiki-Users-blue)](https://github.com/ChafficPlugins/MiningLevels/wiki) [![Download](https://img.shields.io/badge/Download-v1.1.2-red)](https://github.com/ChafficPlugins/MiningLevels/releases/latest) [![Discord](https://img.shields.io/badge/Discord-Join-blue)](https://discord.gg/RYFamQzkcB)
+[![User Wiki](https://img.shields.io/badge/Wiki-Users-blue)](https://github.com/ChafficPlugins/MiningLevels/wiki) [![](https://jitpack.io/v/ChafficPlugins/MiningLevels.svg)](https://github.com/ChafficPlugins/MiningLevels/releases/latest) [![Discord](https://img.shields.io/badge/Discord-Join-blue)](https://discord.gg/RYFamQzkcB)
 
 # MiningLevels
 
@@ -24,5 +24,5 @@ All dependencies are managed automatically by Maven.
 * Spigot
     * Version: 1.18-R0.1-SNAPSHOT
 * CrucialAPI
-    * Version: 2.1.1
+    * Version: 2.1.3
     * [GitHub](https://github.com/Chafficui/CrucialAPI)
