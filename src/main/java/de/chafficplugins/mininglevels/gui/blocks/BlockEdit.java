@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -81,7 +82,7 @@ public class BlockEdit extends Page {
         }
 
         //53 save items
-        addItem(new InventoryItem(53, Material.GREEN_STAINED_GLASS_PANE, "Save materials", Collections.emptyList(), inventoryClick -> {
+        addItem(new InventoryItem(53, Material.GREEN_STAINED_GLASS_PANE, "Save", Collections.emptyList(), inventoryClick -> {
             ArrayList<ItemStack> blocks = new ArrayList<>();
             for(int slot : blockSlots) {
                 ItemStack item = inventoryClick.getClickedInventory().getItem(slot);
@@ -94,10 +95,16 @@ public class BlockEdit extends Page {
                     }
                 }
             }
-            block.setMaterials(blocks);
-            inventoryClick.getPlayer().playSound(inventoryClick.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
-            inventoryClick.getPlayer().closeInventory();
-            BlockList.getInstance().open(inventoryClick.getPlayer());
+            try {
+                block.setMaterials(blocks);
+                MiningBlock.save();
+                inventoryClick.getPlayer().playSound(inventoryClick.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+                inventoryClick.getPlayer().closeInventory();
+                BlockList.getInstance().open(inventoryClick.getPlayer());
+            } catch (IOException e) {
+                inventoryClick.getPlayer().playSound(inventoryClick.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                e.printStackTrace();
+            }
         }));
     }
 }
