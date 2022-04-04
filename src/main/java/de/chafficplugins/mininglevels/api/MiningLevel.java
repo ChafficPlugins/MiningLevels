@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
-import static de.chafficplugins.mininglevels.utils.SenderUtils.sendActionBar;
 import static de.chafficplugins.mininglevels.utils.SenderUtils.sendMessage;
 
 /**
@@ -230,7 +229,7 @@ public class MiningLevel {
         MiningLevel nextLevel = getNext();
         miningPlayer.setLevel(nextLevel);
         player.playSound(player.getLocation(), MiningLevels.lvlUpSound, 1, 1);
-        sendActionBar(player, NEW_LEVEL, ChatColor.GREEN, nextLevel.name);
+        miningPlayer.showMessage(NEW_LEVEL, ChatColor.GREEN, nextLevel.name);
 
         sendMessage(player, LEVEL_UNLOCKED, ChatColor.WHITE, ChatColor.GREEN + nextLevel.name + ChatColor.WHITE);
         player.sendMessage(ChatColor.WHITE + "-------------");

@@ -32,7 +32,7 @@ public class MiningEvents implements Listener {
                 if(miningPlayer.getLevel().getOrdinal() < block.getMinLevel()) {
                     MiningLevel level = MiningLevel.get(block.getMinLevel());
                     if(level == null) return;
-                    sendActionBar(event.getPlayer(), LEVEL_NEEDED, ChatColor.RED, level.getName());
+                    miningPlayer.showMessage(LEVEL_NEEDED, ChatColor.RED, level.getName());
                     event.setCancelled(true);
                 } else {
                     //check if the block was placed by a player
@@ -61,7 +61,7 @@ public class MiningEvents implements Listener {
                     event.setCancelled(true);
                     MiningLevel level = MiningLevel.get(block.getMinLevel());
                     if(level == null) return;
-                    sendActionBar(event.getPlayer(), LEVEL_NEEDED, ChatColor.RED, level.getName());
+                    miningPlayer.showMessage(LEVEL_NEEDED, ChatColor.RED, level.getName());
                 } else {
                     //check if the block was placed by a player
                     if(plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS) || !noXpBlocks.contains(event.getBlock())) {
@@ -95,7 +95,6 @@ public class MiningEvents implements Listener {
     public void onBlockGenerated(final BlockFormEvent event) {
         if(!plugin.getConfigBoolean(LEVEL_WITH_GENERATED_BLOCKS)) {;
             final MiningBlock block = MiningBlock.getMiningBlock(event.getNewState().getType());
-            System.out.println(event.getNewState().getType());
             if(block != null) {
                 noXpBlocks.add(event.getBlock());
             }

@@ -3,11 +3,12 @@ package de.chafficplugins.mininglevels.api;
 import com.google.gson.reflect.TypeToken;
 import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.io.FileManager;
+import io.github.chafficui.CrucialAPI.Utils.localization.Localizer;
+import io.github.chafficui.CrucialAPI.Utils.player.effects.Interface;
 import io.github.chafficui.CrucialAPI.io.Json;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 import static de.chafficplugins.mininglevels.utils.SenderUtils.sendActionBar;
+import static io.github.chafficui.CrucialAPI.Utils.api.Bossbar.sendBossbar;
 
 /**
  * @author Chaffic
@@ -131,11 +133,11 @@ public class MiningPlayer {
             level--;
             miningLevel = MiningLevel.miningLevels.get(level);
             this.xp = miningLevel.getNextLevelXP() + xp;
-            sendActionBar(player, LEVEL_DROPPED, ChatColor.RED + String.valueOf(level));
+            showMessage(LEVEL_DROPPED, ChatColor.RED + String.valueOf(level));
         } else if (xp >= miningLevel.getNextLevelXP() && level + 1 < MiningLevel.miningLevels.size()) {
             getLevel().levelUp(this);
         } else {
-            sendActionBar(player, XP_GAINED, ChatColor.GREEN, getLevel().getName(), String.valueOf(xp), String.valueOf(miningLevel.getNextLevelXP()));
+            showLevelProgress();
         }
     }
 
@@ -253,10 +255,37 @@ public class MiningPlayer {
 
     /**
      * Checks if the given player is a MiningPlayer.
+     *
      * @param uuid The UUID of the player to check.
      * @return True if the player is a MiningPlayer, false if not.
      */
     public static boolean notExists(UUID uuid) {
         return getMiningPlayer(uuid) == null;
+    }
+
+    public void showMessage(String key, ChatColor color, String... values) {
+        String msg = ChatColor.GREEN + Localizer.getLocalizedString(LOCALIZED_IDENTIFIER + "_" + key, values);
+        switch (plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES)) {
+            case "chat" -> getPlayer().sendMessage(msg);
+            case "title" -> Interface.showText(getPlayer(), msg, "");
+            case "actionBar" -> sendActionBar(getPlayer(), key, color, values);
+            case "bossBar" -> sendBossbar(getPlayer(), msg, BarColor.GREEN, 100, 5 * 20);
+            default -> plugin.error("Invalid level progression message type: " + plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES));
+        }
+    }
+
+    public void showLevelProgress() {
+        String msg = ChatColor.GREEN + Localizer.getLocalizedString(LOCALIZED_IDENTIFIER + "_" + XP_GAINED, getLevel().getName(), String.valueOf(xp), String.valueOf(getLevel().getNextLevelXP()));
+        switch (plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES)) {
+            case "chat" -> getPlayer().sendMessage(msg);
+            case "title" -> Interface.showText(getPlayer(), msg, "");
+            case "actionBar" -> sendActionBar(getPlayer(), XP_GAINED, ChatColor.GREEN, getLevel().getName(), String.valueOf(xp), String.valueOf(getLevel().getNextLevelXP()));
+            case "bossBar" -> sendBossbar(getPlayer(), msg, BarColor.GREEN, (int) (((float) xp / (float) getLevel().getNextLevelXP()) * 100), 5 * 20);
+            default -> plugin.error("Invalid level progression message type: " + plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES));
+        }
+    }
+
+    public void showMessage(String key, String... values) {
+        showMessage(key, ChatColor.RESET, values);
     }
 }

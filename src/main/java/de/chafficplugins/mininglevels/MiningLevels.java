@@ -113,6 +113,7 @@ public final class MiningLevels extends JavaPlugin {
         getConfig().addDefault(MAX_LEVEL_XP_DROPS, false);
         getConfig().addDefault(LEVEL_WITH_PLAYER_PLACED_BLOCKS, false);
         getConfig().addDefault(LEVEL_WITH_GENERATED_BLOCKS, false);
+        getConfig().addDefault(LEVEL_PROGRESSION_MESSAGES, "actionBar");
         getConfig().addDefault("prefix", "§8[§6ML§8] §r");
         getConfig().addDefault("language", "CUSTOM");
         getConfig().options().copyDefaults(true);

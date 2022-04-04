@@ -88,7 +88,7 @@
         <dependency>
             <groupId>com.github.Chafficui</groupId>
             <artifactId>CrucialAPI</artifactId>
-            <version>7c5be23</version>
+            <version>bd2ba73026</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
