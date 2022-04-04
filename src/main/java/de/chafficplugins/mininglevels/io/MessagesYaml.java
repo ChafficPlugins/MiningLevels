@@ -47,6 +47,7 @@ public class MessagesYaml {
         messages.addDefault(REWARDS_CLAIMED, "You have claimed your reward.");
         messages.addDefault(NO_MORE_SPACE, "You don't have enough space in your inventory.");
         messages.addDefault(LEVEL_NEEDED, "You need to be level {0} to break this block.");
+        messages.addDefault(LEADERBOARD_HEADER, "Leaderboard");
         messages.options().copyDefaults(true);
         messages.save(messageFile);
     }

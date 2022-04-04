@@ -52,6 +52,14 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                         LevelingCommands.level(sender, args);
                         return true;
                     }
+                    case "leaderboard" -> {
+                        if(!hasOnePermissions(sender, "mininglevels.leaderboard")) {
+                            sendMessage(sender, NO_PERMISSION);
+                            return true;
+                        }
+                        LevelingCommands.leaderboard(sender);
+                        return true;
+                    }
                     case "reload" -> {
                         if(!hasOnePermissions(sender, "mininglevels.reload")) {
                             sendMessage(sender, NO_PERMISSION);
@@ -115,6 +123,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                         sender.sendMessage("§a/mininglevels info");
                         sender.sendMessage("§a/mininglevels self");
                         sender.sendMessage("§a/miningrewards");
+                        if(hasOnePermissions(sender, "mininglevels.leaderboard")) sender.sendMessage("§a/mininglevels leaderboard");
                         if(hasOnePermissions(sender, "mininglevels.setlevel")) sender.sendMessage("§a/mininglevels setlevel <player> <level>");
                         if(hasOnePermissions(sender, "mininglevels.setxp")) sender.sendMessage("§a/mininglevels setxp <player> <xp>");
                         if(hasOnePermissions(sender, "mininglevels.level")) sender.sendMessage("§a/mininglevels level <player>");

@@ -19,6 +19,7 @@ public class ConfigStrings {
     public final static String PERMISSION_LEVEL = "mininglevels.level";
     public final static String PERMISSION_RELOAD = "mininglevels.reload";
     public final static String PERMISSION_EDITOR = "mininglevels.editor";
+    public final static String PERMISSIONS_LEADERBOARD = "mininglevels.leaderboard";
 
     //Configuration
     public final static String LVL_UP_SOUND = "levelup_sound";
@@ -58,6 +59,7 @@ public class ConfigStrings {
     public final static String REWARDS_CLAIMED = "rewards_claimed"; //You have claimed your reward.
     public final static String NO_MORE_SPACE = "no_more_space"; //You don't have enough space in your inventory.
     public final static String LEVEL_NEEDED = "level_needed"; //You need to be level {0} to break this block.
+    public final static String LEADERBOARD_HEADER = "leaderboard_header"; //Leaderboard
     //Usages
     public final static String USAGE_SET_LEVEL = "usage_set_level"; //Usage: /ml setlevel <player> <level>
     public final static String USAGE_SET_XP = "usage_set_xp"; //Usage: /ml setxp <player> <xp>
