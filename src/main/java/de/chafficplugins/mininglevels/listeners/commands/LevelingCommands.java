@@ -87,6 +87,7 @@ public class LevelingCommands {
         for(int i = 0; i < 5; i++) {
             if(i < miningPlayers.size()) {
                 MiningPlayer miningPlayer = miningPlayers.get(i);
+                if(miningPlayer == null) break;
                 sender.sendMessage(PREFIX + ChatColor.YELLOW + (i + 1) + ChatColor.RESET + ". " + ChatColor.GREEN + miningPlayer.getPlayer().getDisplayName() + ChatColor.RESET + " | " + miningPlayer.getLevel().getName() + " (" + miningPlayer.getXp() + "xp)");
             }
         }
