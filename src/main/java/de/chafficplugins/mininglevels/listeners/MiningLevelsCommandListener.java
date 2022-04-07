@@ -70,7 +70,6 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                             plugin.reloadConfig();
                             MiningLevel.reload();
                             MiningBlock.reload();
-                            MiningPlayer.reload();
                             try {
                                 MiningLevels.lvlUpSound = Sound.valueOf(plugin.getConfigString(LVL_UP_SOUND).toUpperCase(Locale.ROOT));
                             } catch (NullPointerException | IllegalArgumentException e) {

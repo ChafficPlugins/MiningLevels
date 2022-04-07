@@ -211,25 +211,6 @@ public class MiningPlayer {
     }
 
     /**
-     * Reloads the MiningPlayers from the file FileManager.PLAYERS and adds all new players to the static ArrayList miningPlayers.
-     * Also saves this new list to the file FileManager.PLAYERS.
-     * @throws IOException If the file FileManager.PLAYERS is not found.
-     */
-    public static void reload() throws IOException {
-        ArrayList<MiningPlayer> mPs = Json.fromJson(FileManager.PLAYERS, new TypeToken<ArrayList<MiningPlayer>>() {
-        }.getType());
-        if(mPs == null) mPs = new ArrayList<>();
-        for (MiningPlayer miningPlayer : miningPlayers) {
-            if(!mPs.contains(miningPlayer)) {
-                mPs.add(miningPlayer);
-            }
-        }
-
-        FileManager.saveFile(FileManager.PLAYERS, mPs);
-        init();
-    }
-
-    /**
      * A method to save all the MiningPlayers in the static ArrayList miningPlayers to the file FileManager.PLAYERS.
      * @throws IOException If the file FileManager.PLAYERS is not found.
      */
