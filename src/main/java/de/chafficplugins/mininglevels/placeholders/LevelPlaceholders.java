@@ -2,9 +2,14 @@ package de.chafficplugins.mininglevels.placeholders;
 
 import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
+import de.chafficplugins.mininglevels.listeners.commands.LevelingCommands;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+import static de.chafficplugins.mininglevels.api.MiningPlayer.getSortedPlayers;
 
 public class LevelPlaceholders extends PlaceholderExpansion {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
@@ -56,7 +61,42 @@ public class LevelPlaceholders extends PlaceholderExpansion {
                 return String.valueOf(miningPlayer.getLevel().getHasteLevel());
             }
             default -> {
-                return null;
+                if(identifier.startsWith("rank")) {
+                    List<MiningPlayer> miningPlayers = getSortedPlayers();
+                    if(identifier.equals("rank")) {
+                        return String.valueOf(miningPlayers.indexOf(miningPlayer) + 1);
+                    } else if(identifier.split("_").length == 3) {
+                        try {
+                            int index = Integer.parseInt(identifier.split("_")[1]);
+                            if(index > 0 && index <= miningPlayers.size()) {
+                                MiningPlayer rankedPlayer = miningPlayers.get(index - 1);
+                                if(rankedPlayer == null) return "error";
+                                switch (identifier.split("_")[2]) {
+                                    case "level" -> {
+                                        return rankedPlayer.getLevel().getName();
+                                    }
+                                    case "xp" -> {
+                                        return String.valueOf(rankedPlayer.getXp());
+                                    }
+                                    case "name" -> {
+                                        return rankedPlayer.getOfflinePlayer().getName();
+                                    }
+                                    default -> {
+                                        return "error";
+                                    }
+                                }
+                            } else {
+                                return "error";
+                            }
+                        } catch (NumberFormatException e) {
+                            return "error";
+                        }
+                    } else {
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
             }
         }
     }

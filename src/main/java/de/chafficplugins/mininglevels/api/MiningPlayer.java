@@ -8,6 +8,7 @@ import io.github.chafficui.CrucialAPI.Utils.player.effects.Interface;
 import io.github.chafficui.CrucialAPI.io.Json;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -122,6 +123,13 @@ public class MiningPlayer {
     }
 
     /**
+     * @return The bukkit player of the MiningPlayer.
+     */
+    public OfflinePlayer getOfflinePlayer() {
+        return Bukkit.getOfflinePlayer(uuid);
+    }
+
+    /**
      * Calculates if the player needs to level up or not.
      * Sends a status message to the player.
      */
@@ -211,25 +219,6 @@ public class MiningPlayer {
     }
 
     /**
-     * Reloads the MiningPlayers from the file FileManager.PLAYERS and adds all new players to the static ArrayList miningPlayers.
-     * Also saves this new list to the file FileManager.PLAYERS.
-     * @throws IOException If the file FileManager.PLAYERS is not found.
-     */
-    public static void reload() throws IOException {
-        ArrayList<MiningPlayer> mPs = Json.fromJson(FileManager.PLAYERS, new TypeToken<ArrayList<MiningPlayer>>() {
-        }.getType());
-        if(mPs == null) mPs = new ArrayList<>();
-        for (MiningPlayer miningPlayer : miningPlayers) {
-            if(!mPs.contains(miningPlayer)) {
-                mPs.add(miningPlayer);
-            }
-        }
-
-        FileManager.saveFile(FileManager.PLAYERS, mPs);
-        init();
-    }
-
-    /**
      * A method to save all the MiningPlayers in the static ArrayList miningPlayers to the file FileManager.PLAYERS.
      * @throws IOException If the file FileManager.PLAYERS is not found.
      */
@@ -283,6 +272,18 @@ public class MiningPlayer {
             case "bossBar" -> sendBossbar(getPlayer(), msg, BarColor.GREEN, (int) (((float) xp / (float) getLevel().getNextLevelXP()) * 100), 5 * 20);
             default -> plugin.error("Invalid level progression message type: " + plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES));
         }
+    }
+
+    public static List<MiningPlayer> getSortedPlayers() {
+        List<MiningPlayer> miningPlayers = MiningPlayer.miningPlayers;
+        miningPlayers.sort((o1, o2) -> {
+            if(o1.getLevel().getOrdinal() == o2.getLevel().getOrdinal()) {
+                return o2.getXp() - o1.getXp();
+            } else {
+                return o1.getLevel().getOrdinal() - o2.getLevel().getOrdinal();
+            }
+        });
+        return miningPlayers;
     }
 
     public void showMessage(String key, String... values) {
