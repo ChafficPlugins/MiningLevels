@@ -8,6 +8,7 @@ import io.github.chafficui.CrucialAPI.Utils.player.effects.Interface;
 import io.github.chafficui.CrucialAPI.io.Json;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -119,6 +120,13 @@ public class MiningPlayer {
      */
     public Player getPlayer() {
         return Bukkit.getPlayer(uuid);
+    }
+
+    /**
+     * @return The bukkit player of the MiningPlayer.
+     */
+    public OfflinePlayer getOfflinePlayer() {
+        return Bukkit.getOfflinePlayer(uuid);
     }
 
     /**
@@ -264,6 +272,18 @@ public class MiningPlayer {
             case "bossBar" -> sendBossbar(getPlayer(), msg, BarColor.GREEN, (int) (((float) xp / (float) getLevel().getNextLevelXP()) * 100), 5 * 20);
             default -> plugin.error("Invalid level progression message type: " + plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES));
         }
+    }
+
+    public static List<MiningPlayer> getSortedPlayers() {
+        List<MiningPlayer> miningPlayers = MiningPlayer.miningPlayers;
+        miningPlayers.sort((o1, o2) -> {
+            if(o1.getLevel().getOrdinal() == o2.getLevel().getOrdinal()) {
+                return o2.getXp() - o1.getXp();
+            } else {
+                return o1.getLevel().getOrdinal() - o2.getLevel().getOrdinal();
+            }
+        });
+        return miningPlayers;
     }
 
     public void showMessage(String key, String... values) {

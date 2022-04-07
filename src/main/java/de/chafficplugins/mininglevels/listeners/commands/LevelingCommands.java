@@ -2,6 +2,7 @@ package de.chafficplugins.mininglevels.listeners.commands;
 
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
+import de.chafficplugins.mininglevels.gui.leaderboard.LeaderboardList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+import static de.chafficplugins.mininglevels.api.MiningPlayer.getSortedPlayers;
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 import static de.chafficplugins.mininglevels.utils.SenderUtils.sendMessage;
 
@@ -73,22 +75,23 @@ public class LevelingCommands {
     }
 
     public static void leaderboard(CommandSender sender) {
-        sendMessage(sender, LEADERBOARD_HEADER);
         //sort miningPlayers by level and xp
-        List<MiningPlayer> miningPlayers = MiningPlayer.miningPlayers;
-        miningPlayers.sort((o1, o2) -> {
-            if(o1.getLevel().getOrdinal() == o2.getLevel().getOrdinal()) {
-                return o2.getXp() - o1.getXp();
-            } else {
-                return o1.getLevel().getOrdinal() - o2.getLevel().getOrdinal();
-            }
-        });
+        List<MiningPlayer> miningPlayers = getSortedPlayers();
+
+        if(sender instanceof Player) {
+            Player player = (Player) sender;
+
+            new LeaderboardList().open(player);
+
+            return;
+        }
+        sendMessage(sender, LEADERBOARD_HEADER);
 
         for(int i = 0; i < 5; i++) {
             if(i < miningPlayers.size()) {
                 MiningPlayer miningPlayer = miningPlayers.get(i);
                 if(miningPlayer == null) break;
-                sender.sendMessage(PREFIX + ChatColor.YELLOW + (i + 1) + ChatColor.RESET + ". " + ChatColor.GREEN + miningPlayer.getPlayer().getDisplayName() + ChatColor.RESET + " | " + miningPlayer.getLevel().getName() + " (" + miningPlayer.getXp() + "xp)");
+                sender.sendMessage(PREFIX + ChatColor.YELLOW + (i + 1) + ChatColor.RESET + ". " + ChatColor.GREEN + miningPlayer.getOfflinePlayer().getName() + ChatColor.RESET + " | " + miningPlayer.getLevel().getName() + " (" + miningPlayer.getXp() + "xp)");
             }
         }
     }

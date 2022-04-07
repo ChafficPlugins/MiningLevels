@@ -2,11 +2,14 @@ package de.chafficplugins.mininglevels.placeholders;
 
 import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
+import de.chafficplugins.mininglevels.listeners.commands.LevelingCommands;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import static de.chafficplugins.mininglevels.api.MiningPlayer.getSortedPlayers;
 
 public class LevelPlaceholders extends PlaceholderExpansion {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
@@ -59,14 +62,7 @@ public class LevelPlaceholders extends PlaceholderExpansion {
             }
             default -> {
                 if(identifier.startsWith("rank")) {
-                    List<MiningPlayer> miningPlayers = MiningPlayer.miningPlayers;
-                    miningPlayers.sort((o1, o2) -> {
-                        if(o1.getLevel().getOrdinal() == o2.getLevel().getOrdinal()) {
-                            return o2.getXp() - o1.getXp();
-                        } else {
-                            return o1.getLevel().getOrdinal() - o2.getLevel().getOrdinal();
-                        }
-                    });
+                    List<MiningPlayer> miningPlayers = getSortedPlayers();
                     if(identifier.equals("rank")) {
                         return String.valueOf(miningPlayers.indexOf(miningPlayer) + 1);
                     } else if(identifier.split("_").length == 3) {
@@ -83,7 +79,7 @@ public class LevelPlaceholders extends PlaceholderExpansion {
                                         return String.valueOf(rankedPlayer.getXp());
                                     }
                                     case "name" -> {
-                                        return rankedPlayer.getPlayer().getDisplayName();
+                                        return rankedPlayer.getOfflinePlayer().getName();
                                     }
                                     default -> {
                                         return "error";
