@@ -280,7 +280,7 @@ public class MiningPlayer {
             if(o1.getLevel().getOrdinal() == o2.getLevel().getOrdinal()) {
                 return o2.getXp() - o1.getXp();
             } else {
-                return o1.getLevel().getOrdinal() - o2.getLevel().getOrdinal();
+                return o2.getLevel().getOrdinal() - o1.getLevel().getOrdinal();
             }
         });
         return miningPlayers;
