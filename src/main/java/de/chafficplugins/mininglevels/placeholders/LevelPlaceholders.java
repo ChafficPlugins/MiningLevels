@@ -82,10 +82,10 @@ public class LevelPlaceholders extends PlaceholderExpansion {
                                     case "xp" -> {
                                         return String.valueOf(rankedPlayer.getXp());
                                     }
-                                    case "xp_needed" -> {
+                                    case "xpNeeded" -> {
                                         return String.valueOf(rankedPlayer.getLevel().getNextLevelXP());
                                     }
-                                    case "xp_percent" -> {
+                                    case "xpPercent" -> {
                                         float percent = (float) rankedPlayer.getXp() / (float) rankedPlayer.getLevel().getNextLevelXP();
                                         return String.valueOf((int) (percent * 100));
                                     }
