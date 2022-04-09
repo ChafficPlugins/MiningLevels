@@ -48,6 +48,10 @@ public class LevelPlaceholders extends PlaceholderExpansion {
             case "xp_needed" -> {
                 return String.valueOf(miningPlayer.getLevel().getNextLevelXP());
             }
+            case "xp_percent" -> {
+                float percent = (float) miningPlayer.getXp() / (float) miningPlayer.getLevel().getNextLevelXP();
+                return String.valueOf((int) (percent * 100));
+            }
             case "extra_ore_probability" -> {
                 return String.valueOf(miningPlayer.getLevel().getExtraOreProbability());
             }
@@ -77,6 +81,13 @@ public class LevelPlaceholders extends PlaceholderExpansion {
                                     }
                                     case "xp" -> {
                                         return String.valueOf(rankedPlayer.getXp());
+                                    }
+                                    case "xp_needed" -> {
+                                        return String.valueOf(rankedPlayer.getLevel().getNextLevelXP());
+                                    }
+                                    case "xp_percent" -> {
+                                        float percent = (float) rankedPlayer.getXp() / (float) rankedPlayer.getLevel().getNextLevelXP();
+                                        return String.valueOf((int) (percent * 100));
                                     }
                                     case "name" -> {
                                         return rankedPlayer.getOfflinePlayer().getName();

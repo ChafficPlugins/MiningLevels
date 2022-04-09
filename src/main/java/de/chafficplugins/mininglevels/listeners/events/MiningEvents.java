@@ -72,7 +72,8 @@ public class MiningEvents implements Listener {
                         MiningLevel level = miningPlayer.getLevel();
                         if(event.getPlayer().getItemInUse() != null && isMiningItem(event.getPlayer().getItemInUse().getType()) && MathUtils.randomDouble(0,100) < level.getExtraOreProbability()) {
                             Block actualBlock = event.getBlock();
-                            for (int i = 0; i < (int) MathUtils.randomDouble(1, level.getMaxExtraOre()); i++) {
+                            int amount = (int) MathUtils.randomDouble(1, level.getMaxExtraOre());
+                            for (int i = 0; i < amount; i++) {
                                 event.getPlayer().getWorld().dropItemNaturally(actualBlock.getLocation(), actualBlock.getDrops().iterator().next());
                             }
                         }
