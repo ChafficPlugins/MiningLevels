@@ -14,13 +14,11 @@ import org.bukkit.event.block.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-
+import static de.chafficplugins.mininglevels.listeners.events.NoXpBlockEvents.noXpBlocks;
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 
 public class MiningEvents implements Listener {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
-    private static final ArrayList<Block> noXpBlocks = new ArrayList<>();
 
     @EventHandler
     public void onBlockDamage(final BlockDamageEvent event) {
@@ -81,26 +79,6 @@ public class MiningEvents implements Listener {
                 }
             } else {
                 event.setCancelled(true);
-            }
-        }
-    }
-
-    @EventHandler
-    public void onBlockPlace(final BlockPlaceEvent event) {
-        if(!plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS)) {
-            final MiningBlock block = MiningBlock.getMiningBlock(event.getBlock().getType());
-            if(block != null) {
-                noXpBlocks.add(event.getBlock());
-            }
-        }
-    }
-
-    @EventHandler
-    public void onBlockGenerated(final BlockFormEvent event) {
-        if(!plugin.getConfigBoolean(LEVEL_WITH_GENERATED_BLOCKS)) {;
-            final MiningBlock block = MiningBlock.getMiningBlock(event.getNewState().getType());
-            if(block != null) {
-                noXpBlocks.add(event.getBlock());
             }
         }
     }
