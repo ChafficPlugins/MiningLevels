@@ -8,6 +8,7 @@ import de.chafficplugins.mininglevels.io.MessagesYaml;
 import de.chafficplugins.mininglevels.listeners.MiningLevelsCommandListener;
 import de.chafficplugins.mininglevels.listeners.RewardCommandListener;
 import de.chafficplugins.mininglevels.listeners.events.MiningEvents;
+import de.chafficplugins.mininglevels.listeners.events.NoXpBlockEvents;
 import de.chafficplugins.mininglevels.listeners.events.ServerEvents;
 import de.chafficplugins.mininglevels.placeholders.LevelPlaceholders;
 import de.chafficplugins.mininglevels.utils.ConfigStrings;
@@ -69,7 +70,7 @@ public final class MiningLevels extends JavaPlugin {
 
                 registerCommand("mininglevels", new MiningLevelsCommandListener());
                 registerCommand("miningrewards", new RewardCommandListener());
-                registerEvents(new MiningEvents(), new ServerEvents());
+                registerEvents(new MiningEvents(), new ServerEvents(), new NoXpBlockEvents());
                 new Stats(this, BSTATS_ID);
                 log(ChatColor.DARK_GREEN + getDescription().getName() + " is now enabled (Version: " + getDescription().getVersion() + ") made by "
                         + ChatColor.AQUA + getDescription().getAuthors() + ".");
@@ -115,6 +116,7 @@ public final class MiningLevels extends JavaPlugin {
         getConfig().addDefault(LEVEL_WITH_PLAYER_PLACED_BLOCKS, false);
         getConfig().addDefault(LEVEL_WITH_GENERATED_BLOCKS, false);
         getConfig().addDefault(LEVEL_PROGRESSION_MESSAGES, "actionBar");
+        getConfig().addDefault(DESTROY_MINING_BLOCKS_ON_EXPLODE, true);
         getConfig().addDefault(MINING_ITEMS, new String[]{
                 Material.DIAMOND_PICKAXE.name(),
                 Material.GOLDEN_PICKAXE.name(),

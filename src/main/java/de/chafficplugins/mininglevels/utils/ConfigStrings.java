@@ -27,6 +27,7 @@ public class ConfigStrings {
     public final static String LEVEL_WITH_PLAYER_PLACED_BLOCKS = "level_with.player_placed_blocks";
     public final static String LEVEL_WITH_GENERATED_BLOCKS = "level_with.generated_blocks";
     public final static String LEVEL_PROGRESSION_MESSAGES = "level_progression_messages";
+    public final static String DESTROY_MINING_BLOCKS_ON_EXPLODE = "destroy_mining_blocks_on_explode";
     public final static String MINING_ITEMS = "mining_items";
 
     //Messages
