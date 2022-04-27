@@ -278,6 +278,9 @@ public class MiningPlayer {
         List<MiningPlayer> miningPlayers = MiningPlayer.miningPlayers;
         miningPlayers.sort((o1, o2) -> {
             if(o1.getLevel().getOrdinal() == o2.getLevel().getOrdinal()) {
+                if (o2.getXp() == o1.getXp()) {
+                    return o1.getPlayer().getName().compareTo(o2.getPlayer().getName());
+                }
                 return o2.getXp() - o1.getXp();
             } else {
                 return o2.getLevel().getOrdinal() - o1.getLevel().getOrdinal();
