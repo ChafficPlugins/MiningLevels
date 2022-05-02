@@ -16,7 +16,7 @@ public class ServerEvents implements Listener {
         if(MiningPlayer.notExists(event.getPlayer().getUniqueId())) {
             new MiningPlayer(event.getPlayer().getUniqueId(), 0, 0);
             MiningPlayer.save();
-            sendDebug(event.getPlayer(), "Player created.");
+            sendDebug(event.getPlayer(), "PlayerJoinEvent: Player created.");
         }
     }
 

@@ -32,7 +32,7 @@ public class NoXpBlockEvents implements Listener {
             final MiningBlock block = MiningBlock.getMiningBlock(event.getBlock().getType());
             if(block != null) {
                 noXpBlocks.add(event.getBlock());
-                sendDebug(event.getPlayer(), "Player placed block registered.");
+                sendDebug(event.getPlayer(), "Block placed: " + "Player placed block registered.");
             }
         }
     }
@@ -58,7 +58,7 @@ public class NoXpBlockEvents implements Listener {
 
                 if(item != null && item.getType().equals(Material.FLINT_AND_STEEL)) {
                     playersWithTNT.add(new PlayerWithTNT(player, block));
-                    sendDebug(event.getPlayer(), "Player with TNT registered.");
+                    sendDebug(event.getPlayer(), "Block clicked: " + "Player with TNT registered.");
                 }
             }
         }
@@ -81,7 +81,7 @@ public class NoXpBlockEvents implements Listener {
                             blocksToRemove.add(block);
                         }
                     }
-                    sendDebug(playerWithTNT.player.getPlayer(), "Higher level block destruction disabled.");
+                    sendDebug(playerWithTNT.player.getPlayer(), "Block exploded: " + "Higher level block destruction disabled.");
                 }
                 event.blockList().removeAll(blocksToRemove);
             }

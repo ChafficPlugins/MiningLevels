@@ -31,7 +31,7 @@ public class MiningEvents implements Listener {
             final MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(event.getPlayer().getUniqueId());
             if(miningPlayer != null) {
                 if (miningPlayer.getLevel().getOrdinal() < block.getMinLevel()) {
-                    sendDebug(event.getPlayer(), "Level too low.");
+                    sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Level too low.");
                     MiningLevel level = MiningLevel.get(block.getMinLevel());
                     if (level == null) return;
                     miningPlayer.showMessage(LEVEL_NEEDED, ChatColor.RED, level.getName());
@@ -39,23 +39,23 @@ public class MiningEvents implements Listener {
                 } else {
                     if (isMiningItem(event.getItemInHand().getType())) {
                         if (miningPlayer.getLevel().getHasteLevel() > 0) {
-                            sendDebug(event.getPlayer(), "Haste level: " + miningPlayer.getLevel().getHasteLevel());
+                            sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Haste level: " + miningPlayer.getLevel().getHasteLevel());
                             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 5 * 20, miningPlayer.getLevel().getHasteLevel()));
                         }
                         if (MathUtils.randomDouble(0, 100) < miningPlayer.getLevel().getInstantBreakProbability()) {
-                            sendDebug(event.getPlayer(), "Instant break.");
+                            sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Instant break.");
                             event.setInstaBreak(true); //Insta break
                         }
                     } else {
-                        sendDebug(event.getPlayer(), "The held item is not a mining item.");
+                        sendDebug(event.getPlayer(), "BlockDamageEvent: " + "The held item is not a mining item.");
                     }
                 }
             } else {
-                sendDebug(event.getPlayer(), "Error: Player is not registered to the plugin!");
+                sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Error: Player is not registered to the plugin!");
                 event.setCancelled(true);
             }
         } else {
-            sendDebug(event.getPlayer(), "Not a mining block.");
+            sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Not a mining block.");
         }
     }
 
@@ -71,7 +71,7 @@ public class MiningEvents implements Listener {
             final MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(event.getPlayer().getUniqueId());
             if(miningPlayer != null) {
                 if(miningPlayer.getLevel().getOrdinal() < block.getMinLevel()) {
-                    sendDebug(event.getPlayer(), "Level too low.");
+                    sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Level too low.");
                     event.setCancelled(true);
                     MiningLevel level = MiningLevel.get(block.getMinLevel());
                     if(level == null) return;
@@ -79,14 +79,14 @@ public class MiningEvents implements Listener {
                 } else {
                     //check if the block was placed by a player
                     if (noXpBlocks.contains(event.getBlock())) {
-                        sendDebug(event.getPlayer(), "Config options disallow block to drop xp.");
+                        sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Config options disallow block to drop xp.");
                         return;
                     }
 
                     miningPlayer.alterXp(block.getXp());
                     MiningLevel level = miningPlayer.getLevel();
                     if (event.getPlayer().getItemInUse() == null || !isMiningItem(event.getPlayer().getItemInUse().getType())) {
-                        sendDebug(event.getPlayer(), "The held item is not a mining item.");
+                        sendDebug(event.getPlayer(), "BlockBreakEvent: " + "The held item is not a mining item.");
                         return;
                     }
 
@@ -96,15 +96,15 @@ public class MiningEvents implements Listener {
                         for (int i = 0; i < amount; i++) {
                             event.getPlayer().getWorld().dropItemNaturally(actualBlock.getLocation(), actualBlock.getDrops().iterator().next());
                         }
-                        sendDebug(event.getPlayer(), "Dropped " + amount + " extra ores.");
+                        sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Dropped " + amount + " extra ores.");
                     }
                 }
             } else {
-                sendDebug(event.getPlayer(), "Error: Player is not registered to the plugin!");
+                sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Error: Player is not registered to the plugin!");
                 event.setCancelled(true);
             }
         } else {
-            sendDebug(event.getPlayer(), "Not a mining block.");
+            sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Not a mining block.");
         }
     }
 }
