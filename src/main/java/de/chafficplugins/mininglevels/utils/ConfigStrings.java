@@ -5,6 +5,7 @@ public class ConfigStrings {
     public final static int BSTATS_ID = 14709;
     public final static String CRUCIAL_API_VERSION = "2.1.5";
     public final static String LOCALIZED_IDENTIFIER = "mininglevels";
+    public static final String PERMISSION_DEBUG = "mininglevels.debug";
 
     public static String PREFIX = "§8[§6ML§8] §r";
 
@@ -29,6 +30,7 @@ public class ConfigStrings {
     public final static String LEVEL_PROGRESSION_MESSAGES = "level_progression_messages";
     public final static String DESTROY_MINING_BLOCKS_ON_EXPLODE = "destroy_mining_blocks_on_explode";
     public final static String MINING_ITEMS = "mining_items";
+    public final static String ADMIN_DEBUG = "admin.debug";
 
     //Messages
     public final static String NO_PERMISSION = "no_permission";

@@ -117,6 +117,7 @@ public final class MiningLevels extends JavaPlugin {
         getConfig().addDefault(LEVEL_WITH_GENERATED_BLOCKS, false);
         getConfig().addDefault(LEVEL_PROGRESSION_MESSAGES, "actionBar");
         getConfig().addDefault(DESTROY_MINING_BLOCKS_ON_EXPLODE, true);
+        getConfig().addDefault(ADMIN_DEBUG, false);
         getConfig().addDefault(MINING_ITEMS, new String[]{
                 Material.DIAMOND_PICKAXE.name(),
                 Material.GOLDEN_PICKAXE.name(),
