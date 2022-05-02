@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
+import static de.chafficplugins.mininglevels.utils.SenderUtils.sendDebug;
 
 public class NoXpBlockEvents implements Listener {
     private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
@@ -27,9 +28,11 @@ public class NoXpBlockEvents implements Listener {
     @EventHandler
     public void onBlockPlace(final BlockPlaceEvent event) {
         if(!plugin.getConfigBoolean(LEVEL_WITH_PLAYER_PLACED_BLOCKS)) {
+            sendDebug(event.getPlayer(), "Block placed: " + event.getBlock().getType());
             final MiningBlock block = MiningBlock.getMiningBlock(event.getBlock().getType());
             if(block != null) {
                 noXpBlocks.add(event.getBlock());
+                sendDebug(event.getPlayer(), "Player placed block registered.");
             }
         }
     }
@@ -48,12 +51,14 @@ public class NoXpBlockEvents implements Listener {
     public void onTNTFired(final PlayerInteractEvent event) {
         Block block = event.getClickedBlock();
         if(!plugin.getConfigBoolean(DESTROY_MINING_BLOCKS_ON_EXPLODE) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && block != null) {
+            sendDebug(event.getPlayer(), "Block clicked: " + block.getType());
             if(block.getType().equals(Material.TNT) || block.getType().equals(Material.TNT_MINECART)) {
                 OfflinePlayer player = event.getPlayer();
                 ItemStack item = event.getItem();
 
                 if(item != null && item.getType().equals(Material.FLINT_AND_STEEL)) {
                     playersWithTNT.add(new PlayerWithTNT(player, block));
+                    sendDebug(event.getPlayer(), "Player with TNT registered.");
                 }
             }
         }
@@ -66,6 +71,7 @@ public class NoXpBlockEvents implements Listener {
         if(!plugin.getConfigBoolean(DESTROY_MINING_BLOCKS_ON_EXPLODE)) {
             PlayerWithTNT playerWithTNT = getPlayerWithTNT(b);
             if(playerWithTNT != null) {
+                sendDebug(playerWithTNT.player.getPlayer(), "Block exploded: " + b.getType());
                 ArrayList<Block> blocksToRemove = new ArrayList<>();
                 for(final Block block : event.blockList()) {
                     MiningBlock miningBlock = MiningBlock.getMiningBlock(block.getType());
@@ -75,6 +81,7 @@ public class NoXpBlockEvents implements Listener {
                             blocksToRemove.add(block);
                         }
                     }
+                    sendDebug(playerWithTNT.player.getPlayer(), "Higher level block destruction disabled.");
                 }
                 event.blockList().removeAll(blocksToRemove);
             }

@@ -8,12 +8,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.IOException;
 
+import static de.chafficplugins.mininglevels.utils.SenderUtils.sendDebug;
+
 public class ServerEvents implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) throws IOException {
         if(MiningPlayer.notExists(event.getPlayer().getUniqueId())) {
             new MiningPlayer(event.getPlayer().getUniqueId(), 0, 0);
             MiningPlayer.save();
+            sendDebug(event.getPlayer(), "Player created.");
         }
     }
 
