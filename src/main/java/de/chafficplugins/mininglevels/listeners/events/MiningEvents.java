@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -37,7 +38,12 @@ public class MiningEvents implements Listener {
                     miningPlayer.showMessage(LEVEL_NEEDED, ChatColor.RED, level.getName());
                     event.setCancelled(true);
                 } else {
-                    if (isMiningItem(event.getItemInHand().getType())) {
+                    ItemStack itemInUse = event.getPlayer().getItemInUse();
+                    if(itemInUse == null) {
+                        sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Item in use is null.");
+                        return;
+                    }
+                    if (isMiningItem(itemInUse.getType())) {
                         if (miningPlayer.getLevel().getHasteLevel() > 0) {
                             sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Haste level: " + miningPlayer.getLevel().getHasteLevel());
                             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 5 * 20, miningPlayer.getLevel().getHasteLevel()));
@@ -47,7 +53,7 @@ public class MiningEvents implements Listener {
                             event.setInstaBreak(true); //Insta break
                         }
                     } else {
-                        sendDebug(event.getPlayer(), "BlockDamageEvent: " + "The held item is not a mining item.");
+                        sendDebug(event.getPlayer(), "BlockDamageEvent: " + "The held item " + itemInUse.getType() + " is not a mining item.");
                     }
                 }
             } else {
@@ -85,8 +91,13 @@ public class MiningEvents implements Listener {
 
                     miningPlayer.alterXp(block.getXp());
                     MiningLevel level = miningPlayer.getLevel();
-                    if (event.getPlayer().getItemInUse() == null || !isMiningItem(event.getPlayer().getItemInUse().getType())) {
-                        sendDebug(event.getPlayer(), "BlockBreakEvent: " + "The held item is not a mining item.");
+                    ItemStack itemInUse = event.getPlayer().getItemInUse();
+                    if(itemInUse == null) {
+                        sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Item in use is null.");
+                        return;
+                    }
+                    if (event.getPlayer().getItemInUse() == null || !isMiningItem(itemInUse.getType())) {
+                        sendDebug(event.getPlayer(), "BlockBreakEvent: " + "The held " + itemInUse.getType() + " item is not a mining item.");
                         return;
                     }
 
