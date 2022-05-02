@@ -38,11 +38,7 @@ public class MiningEvents implements Listener {
                     miningPlayer.showMessage(LEVEL_NEEDED, ChatColor.RED, level.getName());
                     event.setCancelled(true);
                 } else {
-                    ItemStack itemInUse = event.getPlayer().getItemInUse();
-                    if(itemInUse == null) {
-                        sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Item in use is null.");
-                        return;
-                    }
+                    ItemStack itemInUse = event.getPlayer().getInventory().getItemInMainHand();
                     if (isMiningItem(itemInUse.getType())) {
                         if (miningPlayer.getLevel().getHasteLevel() > 0) {
                             sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Haste level: " + miningPlayer.getLevel().getHasteLevel());
@@ -88,15 +84,10 @@ public class MiningEvents implements Listener {
                         sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Config options disallow block to drop xp.");
                         return;
                     }
-
                     miningPlayer.alterXp(block.getXp());
                     MiningLevel level = miningPlayer.getLevel();
-                    ItemStack itemInUse = event.getPlayer().getItemInUse();
-                    if(itemInUse == null) {
-                        sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Item in use is null.");
-                        return;
-                    }
-                    if (event.getPlayer().getItemInUse() == null || !isMiningItem(itemInUse.getType())) {
+                    ItemStack itemInUse = event.getPlayer().getInventory().getItemInMainHand();
+                    if (!isMiningItem(itemInUse.getType())) {
                         sendDebug(event.getPlayer(), "BlockBreakEvent: " + "The held " + itemInUse.getType() + " item is not a mining item.");
                         return;
                     }
