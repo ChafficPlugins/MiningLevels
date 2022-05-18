@@ -5,6 +5,7 @@ import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
 import de.chafficplugins.mininglevels.utils.MathUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -84,22 +85,29 @@ public class MiningEvents implements Listener {
                         sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Config options disallow block to drop xp.");
                         return;
                     }
-                    miningPlayer.alterXp(block.getXp());
-                    MiningLevel level = miningPlayer.getLevel();
                     ItemStack itemInUse = event.getPlayer().getInventory().getItemInMainHand();
                     if (!isMiningItem(itemInUse.getType())) {
                         sendDebug(event.getPlayer(), "BlockBreakEvent: " + "The held " + itemInUse.getType() + " item is not a mining item.");
                         return;
                     }
 
-                    if (MathUtils.randomDouble(0, 100) < level.getExtraOreProbability()) {
-                        Block actualBlock = event.getBlock();
-                        int amount = (int) MathUtils.randomDouble(1, level.getMaxExtraOre());
-                        for (int i = 0; i < amount; i++) {
-                            event.getPlayer().getWorld().dropItemNaturally(actualBlock.getLocation(), actualBlock.getDrops().iterator().next());
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        if (event.isCancelled()) {
+                            sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Event cancelled.");
+                            return;
                         }
-                        sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Dropped " + amount + " extra ores.");
-                    }
+                        miningPlayer.alterXp(block.getXp());
+                        MiningLevel level = miningPlayer.getLevel();
+
+                        if (MathUtils.randomDouble(0, 100) < level.getExtraOreProbability()) {
+                            Block actualBlock = event.getBlock();
+                            int amount = (int) MathUtils.randomDouble(1, level.getMaxExtraOre());
+                            for (int i = 0; i < amount; i++) {
+                                event.getPlayer().getWorld().dropItemNaturally(actualBlock.getLocation(), actualBlock.getDrops().iterator().next());
+                            }
+                            sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Dropped " + amount + " extra ores.");
+                        }
+                    } , 2L);
                 }
             } else {
                 sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Error: Player is not registered to the plugin!");
