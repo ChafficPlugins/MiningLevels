@@ -3,7 +3,7 @@ package de.chafficplugins.mininglevels.utils;
 public class ConfigStrings {
     public final static int SPIGOT_ID = 100886;
     public final static int BSTATS_ID = 14709;
-    public final static String CRUCIAL_API_VERSION = "2.1.5";
+    public final static String CRUCIAL_API_VERSION = "2.1.6";
     public final static String LOCALIZED_IDENTIFIER = "mininglevels";
     public static final String PERMISSION_DEBUG = "mininglevels.debug";
 
