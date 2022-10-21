@@ -98,6 +98,8 @@ public class MiningEvents implements Listener {
                         }
                         miningPlayer.alterXp(block.getXp());
                         MiningLevel level = miningPlayer.getLevel();
+                        
+                        if (actualBlock.getDrops().isEmpty()) {return;}
 
                         if (MathUtils.randomDouble(0, 100) < level.getExtraOreProbability()) {
                             Block actualBlock = event.getBlock();
