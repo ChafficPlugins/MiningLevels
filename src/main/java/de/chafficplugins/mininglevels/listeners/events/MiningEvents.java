@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -66,7 +67,7 @@ public class MiningEvents implements Listener {
         return plugin.getConfig().getStringList(MINING_ITEMS).contains(material.name());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBreak(final BlockBreakEvent event) {
         final MiningBlock block = MiningBlock.getMiningBlock(event.getBlock().getType());
         sendDebug(event.getPlayer(), "BlockBreakEvent: " + event.getBlock().getType().name());
@@ -106,7 +107,7 @@ public class MiningEvents implements Listener {
                             int amount = (int) MathUtils.randomDouble(1, level.getMaxExtraOre());
                             ItemStack item = actualBlock.getDrops().iterator().next();
                             for (int i = 0; i < amount; i++) {
-                                event.getPlayer().getWorld().dropItemNaturally(actualBlock.getLocation(), item);
+                                actualBlock.getDrops().add(item);
                             }
                             sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Dropped " + amount + " extra ores.");
                         }
