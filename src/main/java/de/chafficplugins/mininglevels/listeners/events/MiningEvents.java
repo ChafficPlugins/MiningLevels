@@ -101,10 +101,13 @@ public class MiningEvents implements Listener {
 
                         if (MathUtils.randomDouble(0, 100) < level.getExtraOreProbability()) {
                             Block actualBlock = event.getBlock();
+
+                            if (actualBlock.getDrops().isEmpty()) {return;}
+
                             int amount = (int) MathUtils.randomDouble(1, level.getMaxExtraOre());
                             ItemStack item = actualBlock.getDrops().iterator().next();
                             for (int i = 0; i < amount; i++) {
-                                event.getPlayer().getWorld().dropItemNaturally(actualBlock.getLocation(), item);
+                                actualBlock.getDrops().add(item);
                             }
                             sendDebug(event.getPlayer(), "BlockBreakEvent: " + "Dropped " + amount + " extra ores.");
                         }
