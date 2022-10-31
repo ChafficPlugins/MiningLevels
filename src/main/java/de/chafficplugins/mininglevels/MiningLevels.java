@@ -46,8 +46,8 @@ public final class MiningLevels extends JavaPlugin {
         // Plugin startup logic
         try {
             if (!Server.checkCompatibility("1.19", "1.18", "1.17", "1.16", "1.15")) {
-                error("Unsupported server version, there may be some issues with this version. Please use a supported version.");
-                error("This is NOT a bug. Do NOT report this!");
+                warn("Unsupported server version, there may be some issues with this version. Please use a supported version.");
+                warn("This is NOT a bug. Do NOT report this!");
             }
 
             if(Crucial.connect()) {
@@ -156,5 +156,9 @@ public final class MiningLevels extends JavaPlugin {
 
     public void error(String message) {
         logger.severe(message);
+    }
+
+    public void warn(String message) {
+        logger.warning(message);
     }
 }
