@@ -2,7 +2,6 @@ package de.chafficplugins.mininglevels.placeholders;
 
 import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
-import de.chafficplugins.mininglevels.listeners.commands.LevelingCommands;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -39,6 +38,9 @@ public class LevelPlaceholders extends PlaceholderExpansion {
         MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
         if(miningPlayer == null) return "error";
         switch (identifier) {
+            case "player_name" -> {
+                return miningPlayer.getOfflinePlayer().getName();
+            }
             case "level" -> {
                 return miningPlayer.getLevel().getName();
             }
