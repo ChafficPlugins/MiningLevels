@@ -11,7 +11,6 @@ import de.chafficplugins.mininglevels.listeners.events.MiningEvents;
 import de.chafficplugins.mininglevels.listeners.events.NoXpBlockEvents;
 import de.chafficplugins.mininglevels.listeners.events.ServerEvents;
 import de.chafficplugins.mininglevels.placeholders.LevelPlaceholders;
-import de.chafficplugins.mininglevels.utils.ConfigStrings;
 import de.chafficplugins.mininglevels.utils.Crucial;
 import de.chafficplugins.mininglevels.utils.CustomMessages;
 import io.github.chafficui.CrucialAPI.Utils.Server;
@@ -61,6 +60,8 @@ public final class MiningLevels extends JavaPlugin {
                 if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                     log("PlaceholderAPI found. Registering Placeholders.");
                     new LevelPlaceholders().register();
+                } else {
+                    warn("PlaceholderAPI not found. Placeholders and Command Rewards will not work. Consider installing PlaceholderAPI.");
                 }
 
                 //Init localizations
