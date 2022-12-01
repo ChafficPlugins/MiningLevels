@@ -3,9 +3,8 @@ package de.chafficplugins.mininglevels.api;
 import com.google.gson.reflect.TypeToken;
 import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.io.FileManager;
+import de.chafficplugins.mininglevels.placeholders.PlaceholderCommand;
 import io.github.chafficui.CrucialAPI.io.Json;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +23,8 @@ import static de.chafficplugins.mininglevels.utils.SenderUtils.sendMessage;
  * This class defines a mining level and all its rewards, skills and commands.
  */
 public class MiningLevel {
+    private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
+
     /**
      * The displayName of the mining level.
      */
@@ -256,9 +257,9 @@ public class MiningLevel {
         }
 
         //perform all commands
-        if(nextLevel.commands != null && nextLevel.commands.length > 0) {
+        if(nextLevel.commands != null && nextLevel.commands.length > 0 && plugin.placeholderAPI) {
             for (String command : nextLevel.commands) {
-                player.performCommand(command);
+                PlaceholderCommand.perform(player, command);
             }
         }
     }
