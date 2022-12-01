@@ -2,12 +2,15 @@ package de.chafficplugins.mininglevels.gui.leaderboard;
 
 import de.chafficplugins.mininglevels.api.MiningPlayer;
 import io.github.chafficui.CrucialAPI.Utils.customItems.Stack;
+import io.github.chafficui.CrucialAPI.Utils.localization.Localizer;
 import io.github.chafficui.CrucialAPI.Utils.player.inventory.InventoryItem;
 import io.github.chafficui.CrucialAPI.Utils.player.inventory.Page;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+
+import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 
 public class LeaderboardList extends Page {
 
@@ -24,11 +27,11 @@ public class LeaderboardList extends Page {
                 MiningPlayer miningPlayer = miningPlayers.get(i);
                 if (miningPlayer == null) continue;
                 ItemStack stack = Stack.getStack(miningPlayer.getUUID(), i + 1 + ". " + miningPlayer.getOfflinePlayer().getName(), List.of(
-                        "§7Level: §e" + miningPlayer.getLevel().getName(),
-                        "§7XP: §e" + miningPlayer.getXp() + " / " + miningPlayer.getLevel().getNextLevelXP()
+                        Localizer.getLocalizedString(LOCALIZED_IDENTIFIER + "_" + CURRENT_LEVEL, miningPlayer.getLevel().getName()),
+                        Localizer.getLocalizedString(LOCALIZED_IDENTIFIER + "_" + CURRENT_XP, miningPlayer.getXp() + "", miningPlayer.getLevel().getNextLevelXP() + "")
                 ));
 
-                addItem(new InventoryItem(i, stack));
+                addItem(new InventoryItem(i, stack, (event) -> new MiningLevelProfile(miningPlayer.getOfflinePlayer(), this).open(event.getPlayer())));
             }
         }
     }
