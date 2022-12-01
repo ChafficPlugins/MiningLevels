@@ -5,9 +5,9 @@ import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
 import de.chafficplugins.mininglevels.api.MiningPlayer;
 import de.chafficplugins.mininglevels.gui.blocks.BlockList;
+import de.chafficplugins.mininglevels.gui.leaderboard.MiningLevelProfile;
 import de.chafficplugins.mininglevels.gui.levels.LevelList;
 import de.chafficplugins.mininglevels.listeners.commands.LevelingCommands;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -151,14 +151,9 @@ public class MiningLevelsCommandListener implements CommandExecutor {
             sendMessage(sender, ERROR_OCCURRED);
             return true;
         }
-        MiningLevel level = miningPlayer.getLevel();
 
-        sendMessage(player, CURRENT_LEVEL, miningPlayer.getLevel().getName());
-        sendMessage(player, CURRENT_XP, String.valueOf(miningPlayer.getXp()), String.valueOf(level.getNextLevelXP()));
-        sendMessage(player, CURRENT_HASTE_LEVEL, String.valueOf(level.getHasteLevel()));
-        sendMessage(player, CURRENT_EXTRA_ORE_LEVEL, String.valueOf(level.getExtraOreProbability()));
-        sendMessage(player, CURRENT_MAX_EXTRA_ORE, String.valueOf(level.getMaxExtraOre()));
-        sendMessage(player, CURRENT_INSTANT_BREAK_LEVEL, String.valueOf(level.getInstantBreakProbability()));
+        new MiningLevelProfile(player).open(player);
+
         return true;
     }
 }
