@@ -67,4 +67,5 @@ public class ConfigStrings {
     public final static String USAGE_SET_LEVEL = "usage_set_level"; //Usage: /ml setlevel <player> <level>
     public final static String USAGE_SET_XP = "usage_set_xp"; //Usage: /ml setxp <player> <xp>
     public final static String USAGE_LEVEL = "usage_level"; //Usage: /ml level <player>
+    public final static String CLOSE = "close"; //Close
 }
