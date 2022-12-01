@@ -24,5 +24,5 @@ All dependencies are managed automatically by Maven.
 * Spigot
     * Version: 1.18-R0.1-SNAPSHOT
 * CrucialAPI
-    * Version: 2.1.3
+    * Version: 2.1.6
     * [GitHub](https://github.com/Chafficui/CrucialAPI)

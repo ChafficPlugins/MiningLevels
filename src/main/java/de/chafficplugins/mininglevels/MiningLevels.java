@@ -8,6 +8,7 @@ import de.chafficplugins.mininglevels.io.MessagesYaml;
 import de.chafficplugins.mininglevels.listeners.MiningLevelsCommandListener;
 import de.chafficplugins.mininglevels.listeners.RewardCommandListener;
 import de.chafficplugins.mininglevels.listeners.events.MiningEvents;
+import de.chafficplugins.mininglevels.listeners.events.NoXpBlockEvents;
 import de.chafficplugins.mininglevels.listeners.events.ServerEvents;
 import de.chafficplugins.mininglevels.placeholders.LevelPlaceholders;
 import de.chafficplugins.mininglevels.utils.ConfigStrings;
@@ -44,10 +45,9 @@ public final class MiningLevels extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         try {
-            if (!Server.checkCompatibility("1.18", "1.17", "1.16", "1.15")) {
-                error("Wrong server version. Please use a supported version.");
-                error("This is NOT a bug. Do NOT report this!");
-                throw new IOException();
+            if (!Server.checkCompatibility("1.19", "1.18", "1.17", "1.16", "1.15")) {
+                warn("Unsupported server version, there may be some issues with this version. Please use a supported version.");
+                warn("This is NOT a bug. Do NOT report this!");
             }
 
             if(Crucial.connect()) {
@@ -69,7 +69,7 @@ public final class MiningLevels extends JavaPlugin {
 
                 registerCommand("mininglevels", new MiningLevelsCommandListener());
                 registerCommand("miningrewards", new RewardCommandListener());
-                registerEvents(new MiningEvents(), new ServerEvents());
+                registerEvents(new MiningEvents(), new ServerEvents(), new NoXpBlockEvents());
                 new Stats(this, BSTATS_ID);
                 log(ChatColor.DARK_GREEN + getDescription().getName() + " is now enabled (Version: " + getDescription().getVersion() + ") made by "
                         + ChatColor.AQUA + getDescription().getAuthors() + ".");
@@ -115,6 +115,8 @@ public final class MiningLevels extends JavaPlugin {
         getConfig().addDefault(LEVEL_WITH_PLAYER_PLACED_BLOCKS, false);
         getConfig().addDefault(LEVEL_WITH_GENERATED_BLOCKS, false);
         getConfig().addDefault(LEVEL_PROGRESSION_MESSAGES, "actionBar");
+        getConfig().addDefault(DESTROY_MINING_BLOCKS_ON_EXPLODE, true);
+        getConfig().addDefault(ADMIN_DEBUG, false);
         getConfig().addDefault(MINING_ITEMS, new String[]{
                 Material.DIAMOND_PICKAXE.name(),
                 Material.GOLDEN_PICKAXE.name(),
@@ -154,5 +156,9 @@ public final class MiningLevels extends JavaPlugin {
 
     public void error(String message) {
         logger.severe(message);
+    }
+
+    public void warn(String message) {
+        logger.warning(message);
     }
 }
