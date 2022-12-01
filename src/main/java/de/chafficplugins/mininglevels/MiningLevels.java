@@ -34,6 +34,7 @@ public final class MiningLevels extends JavaPlugin {
     private final Logger logger = Logger.getLogger("MiningLevels");
     public FileManager fileManager;
     public CustomMessages customMessages;
+    public boolean placeholderAPI = false;
 
     @Override
     public void onLoad() {
@@ -60,6 +61,7 @@ public final class MiningLevels extends JavaPlugin {
                 if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                     log("PlaceholderAPI found. Registering Placeholders.");
                     new LevelPlaceholders().register();
+                    placeholderAPI = true;
                 } else {
                     warn("PlaceholderAPI not found. Placeholders and Command Rewards will not work. Consider installing PlaceholderAPI.");
                 }
