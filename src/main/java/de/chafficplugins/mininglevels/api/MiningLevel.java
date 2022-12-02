@@ -60,7 +60,7 @@ public class MiningLevel {
     /**
      * The items a player will be able to claim with the claim command, when he has leveled up to this MiningLevel.
      */
-    private ArrayList<ItemStack> rewards = new ArrayList<>();
+    private ArrayList<Reward> rewards = new ArrayList<>();
 
     /**
      * Initializes the MiningLevels.
@@ -86,7 +86,11 @@ public class MiningLevel {
      * @return An Array of ItemStacks.
      */
     public ItemStack[] getRewards() {
-        return rewards.toArray(new ItemStack[0]);
+        ArrayList<ItemStack> items = new ArrayList<>();
+        for (Reward reward : rewards) {
+            items.add(reward.getItemStack());
+        }
+        return items.toArray(new ItemStack[0]);
     }
 
     /**
@@ -94,7 +98,7 @@ public class MiningLevel {
      * @param item The ItemStack to add.
      */
     public void addReward(ItemStack item) {
-        rewards.add(item);
+        rewards.add(new Reward(item));
     }
 
     /**
@@ -102,7 +106,10 @@ public class MiningLevel {
      * @param rewards The new rewards.
      */
     public void setRewards(ArrayList<ItemStack> rewards) {
-        this.rewards = rewards;
+        this.rewards = new ArrayList<>();
+        for (ItemStack item : rewards) {
+            this.rewards.add(new Reward(item));
+        }
     }
 
     /**
@@ -249,7 +256,7 @@ public class MiningLevel {
         if(nextLevel.rewards != null && nextLevel.rewards.size() > 0) {
             player.sendMessage("");
             sendMessage(player, REWARDS_LIST, ChatColor.WHITE);
-            for (ItemStack reward : nextLevel.rewards) {
+            for (Reward reward : nextLevel.rewards) {
                 player.sendMessage(ChatColor.WHITE + "  " + ChatColor.YELLOW + getName(reward) + ChatColor.WHITE + ": " + ChatColor.GREEN + reward.getAmount());
             }
             miningPlayer.addRewards(nextLevel.getRewards());
@@ -328,7 +335,8 @@ public class MiningLevel {
     /**
      * Returns the material name or the displayName of an item.
      */
-    public static String getName(ItemStack itemStack) {
+    public static String getName(Reward reward) {
+        ItemStack itemStack = reward.getItemStack();
         if(itemStack.getType().name().equals("AIR")) {
             return "AIR";
         }
