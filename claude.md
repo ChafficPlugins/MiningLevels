@@ -2,7 +2,7 @@
 
 An easily configurable advanced mining level system for Spigot/Minecraft servers. Players gain XP by mining configured blocks, level up through a progression system, unlock skills (haste, instant break, extra ore drops), and claim item rewards.
 
-**Version:** 2.0.0
+**Version:** 1.3.0
 **Author:** ChafficPlugins
 **Server API:** Paper 1.21
 **Java:** 21
