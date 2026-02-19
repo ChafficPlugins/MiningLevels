@@ -3,9 +3,9 @@ package de.chafficplugins.mininglevels.api;
 import com.google.gson.reflect.TypeToken;
 import de.chafficplugins.mininglevels.MiningLevels;
 import de.chafficplugins.mininglevels.io.FileManager;
-import io.github.chafficui.CrucialAPI.Utils.localization.Localizer;
-import io.github.chafficui.CrucialAPI.Utils.player.effects.Interface;
-import io.github.chafficui.CrucialAPI.io.Json;
+import io.github.chafficui.CrucialLib.Utils.localization.Localizer;
+import io.github.chafficui.CrucialLib.Utils.player.effects.Interface;
+import io.github.chafficui.CrucialLib.io.Json;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -21,7 +21,7 @@ import java.util.UUID;
 
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 import static de.chafficplugins.mininglevels.utils.SenderUtils.sendActionBar;
-import static io.github.chafficui.CrucialAPI.Utils.api.Bossbar.sendBossbar;
+import static io.github.chafficui.CrucialLib.Utils.api.Bossbar.sendBossbar;
 
 /**
  * @author Chaffic
@@ -31,7 +31,11 @@ import static io.github.chafficui.CrucialAPI.Utils.api.Bossbar.sendBossbar;
  * Contains a player's mining level, its xp and unclaimed rewards.
  */
 public class MiningPlayer {
-    private static final MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
+    private static MiningLevels plugin;
+    private static MiningLevels getPlugin() {
+        if (plugin == null) plugin = MiningLevels.getPlugin(MiningLevels.class);
+        return plugin;
+    }
 
     /**
      * The bukkit player's uuid.
@@ -110,7 +114,7 @@ public class MiningPlayer {
      * @param xp The amount of xp to alter the players xp by.
      */
     public void alterXp(int xp) {
-        if(level == MiningLevel.getMaxLevel().getOrdinal() && !plugin.getConfigBoolean(MAX_LEVEL_XP_DROPS)) return;
+        if(level == MiningLevel.getMaxLevel().getOrdinal() && !getPlugin().getConfigBoolean(MAX_LEVEL_XP_DROPS)) return;
         this.xp += xp;
         xpChange();
     }
@@ -254,23 +258,23 @@ public class MiningPlayer {
 
     public void showMessage(String key, ChatColor color, String... values) {
         String msg = ChatColor.GREEN + Localizer.getLocalizedString(LOCALIZED_IDENTIFIER + "_" + key, values);
-        switch (plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES)) {
+        switch (getPlugin().getConfigString(LEVEL_PROGRESSION_MESSAGES)) {
             case "chat" -> getPlayer().sendMessage(msg);
             case "title" -> Interface.showText(getPlayer(), msg, "");
             case "actionBar" -> sendActionBar(getPlayer(), key, color, values);
             case "bossBar" -> sendBossbar(getPlayer(), msg, BarColor.GREEN, 100, 5 * 20);
-            default -> plugin.error("Invalid level progression message type: " + plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES));
+            default -> getPlugin().error("Invalid level progression message type: " + getPlugin().getConfigString(LEVEL_PROGRESSION_MESSAGES));
         }
     }
 
     public void showLevelProgress() {
         String msg = ChatColor.GREEN + Localizer.getLocalizedString(LOCALIZED_IDENTIFIER + "_" + XP_GAINED, getLevel().getName(), String.valueOf(xp), String.valueOf(getLevel().getNextLevelXP()));
-        switch (plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES)) {
+        switch (getPlugin().getConfigString(LEVEL_PROGRESSION_MESSAGES)) {
             case "chat" -> getPlayer().sendMessage(msg);
             case "title" -> Interface.showText(getPlayer(), msg, "");
             case "actionBar" -> sendActionBar(getPlayer(), XP_GAINED, ChatColor.GREEN, getLevel().getName(), String.valueOf(xp), String.valueOf(getLevel().getNextLevelXP()));
             case "bossBar" -> sendBossbar(getPlayer(), msg, BarColor.GREEN, (int) (((float) xp / (float) getLevel().getNextLevelXP()) * 100), 5 * 20);
-            default -> plugin.error("Invalid level progression message type: " + plugin.getConfigString(LEVEL_PROGRESSION_MESSAGES));
+            default -> getPlugin().error("Invalid level progression message type: " + getPlugin().getConfigString(LEVEL_PROGRESSION_MESSAGES));
         }
     }
 

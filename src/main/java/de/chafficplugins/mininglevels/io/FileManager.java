@@ -1,7 +1,7 @@
 package de.chafficplugins.mininglevels.io;
 
 import de.chafficplugins.mininglevels.MiningLevels;
-import io.github.chafficui.CrucialAPI.io.Json;
+import io.github.chafficui.CrucialLib.io.Json;
 
 import java.io.File;
 import java.io.FileOutputStream;

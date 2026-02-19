@@ -43,7 +43,7 @@ public class MiningEvents implements Listener {
                     if (isMiningItem(itemInUse.getType())) {
                         if (miningPlayer.getLevel().getHasteLevel() > 0) {
                             sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Haste level: " + miningPlayer.getLevel().getHasteLevel());
-                            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 5 * 20, miningPlayer.getLevel().getHasteLevel()));
+                            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 5 * 20, miningPlayer.getLevel().getHasteLevel()));
                         }
                         if (MathUtils.randomDouble(0, 100) < miningPlayer.getLevel().getInstantBreakProbability()) {
                             sendDebug(event.getPlayer(), "BlockDamageEvent: " + "Instant break.");
