@@ -23,6 +23,19 @@ jobs:
       - name: Build and test
         run: mvn -B clean verify --file pom.xml
 
+      - name: Get project version
+        id: version
+        run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_OUTPUT"
+
+      - name: Rename JAR for release
+        run: cp target/MiningLevels-${{ steps.version.outputs.VERSION }}.jar target/MiningLevels-v${{ steps.version.outputs.VERSION }}.jar
+
+      - name: Upload plugin JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiningLevels-v${{ steps.version.outputs.VERSION }}
+          path: target/MiningLevels-v${{ steps.version.outputs.VERSION }}.jar
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
