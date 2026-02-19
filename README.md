@@ -1,8 +1,8 @@
-[![User Wiki](https://img.shields.io/badge/Wiki-Users-blue)](https://github.com/ChafficPlugins/MiningLevels/wiki) [![](https://jitpack.io/v/ChafficPlugins/MiningLevels.svg)](https://github.com/ChafficPlugins/MiningLevels/releases/latest) [![Discord](https://img.shields.io/badge/Discord-Join-blue)](https://discord.gg/RYFamQzkcB)
+[![CI](https://github.com/ChafficPlugins/MiningLevels/actions/workflows/ci.yml/badge.svg)](https://github.com/ChafficPlugins/MiningLevels/actions/workflows/ci.yml) [![](https://jitpack.io/v/ChafficPlugins/MiningLevels.svg)](https://github.com/ChafficPlugins/MiningLevels/releases/latest) [![Discord](https://img.shields.io/badge/Discord-Join-blue)](https://discord.gg/RYFamQzkcB)
 
 # MiningLevels
 
-MiningLevels is a Spigot plugin that adds extra complexity to your mining experience.
+MiningLevels is a Paper/Spigot plugin that adds extra complexity to your mining experience.
 
 # Summary
 
@@ -18,11 +18,11 @@ MiningLevels is a Spigot plugin that adds extra complexity to your mining experi
 
 # Dependencies
 
-This project requires Java 16+.
+This project requires Java 21+.
 All dependencies are managed automatically by Maven.
 
-* Spigot
-    * Version: 1.18-R0.1-SNAPSHOT
-* CrucialAPI
-    * Version: 2.1.6
-    * [GitHub](https://github.com/Chafficui/CrucialAPI)
+* Paper API
+    * Version: 1.21
+* CrucialLib
+    * Version: 3.0.0
+    * [GitHub](https://github.com/ChafficPlugins/CrucialLib)

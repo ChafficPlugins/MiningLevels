@@ -9,7 +9,7 @@ You can download MiningLevels from:
 
 ## Setup
 
-1. **Install CrucialLib** – Download [CrucialLib](https://github.com/Chafficui/CrucialAPI) and place it in your server's `plugins/` folder. MiningLevels requires this dependency.
+1. **Install CrucialLib** – Download [CrucialLib](https://github.com/ChafficPlugins/CrucialLib) and place it in your server's `plugins/` folder. MiningLevels requires this dependency.
 2. **Install MiningLevels** – Place the MiningLevels `.jar` file in your server's `plugins/` folder.
 3. **Restart the server** – Restart (not reload) your server to let the plugin generate its default configuration files.
 4. **Configure** – Edit the generated config files in `plugins/MiningLevels/` to suit your server. See the [Configuration](configuration.md) guide for details.
