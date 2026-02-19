@@ -23,7 +23,7 @@ The Maven Shade Plugin bundles dependencies into the final JAR. CI uses GitHub A
 |---|---|---|---|
 | Spigot API | 1.18-R0.1-SNAPSHOT | provided | Server framework |
 | CrucialAPI | 2.1.7 | provided | GUI framework, localization, JSON I/O, utilities |
-| PlaceholderAPI | 2.11.1 | provided | Placeholder expansion (optional) |
+| PlaceholderAPI | 2.11.5 | provided | Placeholder expansion (optional) |
 | JUnit Jupiter | 5.9.0 | test | Unit testing |
 
 Both CrucialAPI and PlaceholderAPI are soft dependencies. CrucialAPI is auto-downloaded from GitHub releases if missing. PlaceholderAPI features gracefully degrade when absent.
