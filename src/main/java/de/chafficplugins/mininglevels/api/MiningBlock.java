@@ -2,7 +2,7 @@ package de.chafficplugins.mininglevels.api;
 
 import com.google.gson.reflect.TypeToken;
 import de.chafficplugins.mininglevels.io.FileManager;
-import io.github.chafficui.CrucialAPI.io.Json;
+import io.github.chafficui.CrucialLib.io.Json;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

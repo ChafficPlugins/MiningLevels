@@ -2,8 +2,8 @@ package de.chafficplugins.mininglevels.gui.blocks;
 
 import de.chafficplugins.mininglevels.api.MiningBlock;
 import de.chafficplugins.mininglevels.api.MiningLevel;
-import io.github.chafficui.CrucialAPI.Utils.player.inventory.InventoryItem;
-import io.github.chafficui.CrucialAPI.Utils.player.inventory.Page;
+import io.github.chafficui.CrucialLib.Utils.player.inventory.InventoryItem;
+import io.github.chafficui.CrucialLib.Utils.player.inventory.Page;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 

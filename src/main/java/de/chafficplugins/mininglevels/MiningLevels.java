@@ -13,8 +13,8 @@ import de.chafficplugins.mininglevels.listeners.events.ServerEvents;
 import de.chafficplugins.mininglevels.placeholders.LevelPlaceholders;
 import de.chafficplugins.mininglevels.utils.Crucial;
 import de.chafficplugins.mininglevels.utils.CustomMessages;
-import io.github.chafficui.CrucialAPI.Utils.Server;
-import io.github.chafficui.CrucialAPI.Utils.Stats;
+import io.github.chafficui.CrucialLib.Utils.Server;
+import io.github.chafficui.CrucialLib.Utils.Stats;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 
 import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
 
-public final class MiningLevels extends JavaPlugin {
+public class MiningLevels extends JavaPlugin {
     private final Logger logger = Logger.getLogger("MiningLevels");
     public FileManager fileManager;
     public CustomMessages customMessages;
@@ -45,7 +45,7 @@ public final class MiningLevels extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         try {
-            if (!Server.checkCompatibility("1.19", "1.18", "1.17", "1.16", "1.15")) {
+            if (!Server.checkCompatibility("1.21")) {
                 warn("Unsupported server version, there may be some issues with this version. Please use a supported version.");
                 warn("This is NOT a bug. Do NOT report this!");
             }

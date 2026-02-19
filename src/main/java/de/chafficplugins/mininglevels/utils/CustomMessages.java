@@ -1,7 +1,7 @@
 package de.chafficplugins.mininglevels.utils;
 
 import de.chafficplugins.mininglevels.MiningLevels;
-import io.github.chafficui.CrucialAPI.Utils.localization.LocalizedFromYaml;
+import io.github.chafficui.CrucialLib.Utils.localization.LocalizedFromYaml;
 
 import java.io.IOException;
 

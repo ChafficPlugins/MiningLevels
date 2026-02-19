@@ -1,10 +1,10 @@
 package de.chafficplugins.mininglevels.gui.leaderboard;
 
 import de.chafficplugins.mininglevels.api.MiningPlayer;
-import io.github.chafficui.CrucialAPI.Utils.customItems.Stack;
-import io.github.chafficui.CrucialAPI.Utils.localization.Localizer;
-import io.github.chafficui.CrucialAPI.Utils.player.inventory.InventoryItem;
-import io.github.chafficui.CrucialAPI.Utils.player.inventory.Page;
+import io.github.chafficui.CrucialLib.Utils.customItems.Stack;
+import io.github.chafficui.CrucialLib.Utils.localization.Localizer;
+import io.github.chafficui.CrucialLib.Utils.player.inventory.InventoryItem;
+import io.github.chafficui.CrucialLib.Utils.player.inventory.Page;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;

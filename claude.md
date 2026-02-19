@@ -2,31 +2,34 @@
 
 An easily configurable advanced mining level system for Spigot/Minecraft servers. Players gain XP by mining configured blocks, level up through a progression system, unlock skills (haste, instant break, extra ore drops), and claim item rewards.
 
-**Version:** 1.2.10
+**Version:** 1.3.0
 **Author:** ChafficPlugins
-**Spigot API:** 1.15+ (tested on 1.15–1.19)
-**Java:** Compiled to Java 14 bytecode; requires Java 16+ at runtime
+**Server API:** Paper 1.21
+**Java:** 21
 
 ## Build System
 
 Maven project. Build with:
 
 ```
-mvn -B package --file pom.xml
+mvn clean verify        # compile + test + package
+mvn test                # run tests only
+mvn package -DskipTests # package without tests
 ```
 
-The Maven Shade Plugin bundles dependencies into the final JAR. CI uses GitHub Actions (`.github/workflows/maven.yml`) with JDK 18 on `ubuntu-latest`, triggered on push/PR to `master`.
+The Maven Shade Plugin bundles dependencies into the final JAR. CI uses GitHub Actions (`.github/workflows/ci.yml`) with JDK 21 on `ubuntu-latest`, triggered on push/PR to `master`.
 
 ### Dependencies
 
 | Dependency | Version | Scope | Purpose |
 |---|---|---|---|
-| Spigot API | 1.18-R0.1-SNAPSHOT | provided | Server framework |
-| CrucialAPI | 2.1.7 | provided | GUI framework, localization, JSON I/O, utilities |
+| Paper API | 1.21.11-R0.1-SNAPSHOT | provided | Server framework |
+| CrucialLib | 3.0.0 | compile | GUI framework, localization, JSON I/O, utilities |
 | PlaceholderAPI | 2.11.5 | provided | Placeholder expansion (optional) |
-| JUnit Jupiter | 5.9.0 | test | Unit testing |
+| JUnit Jupiter | 5.11.0 | test | Unit testing |
+| MockBukkit | 4.101.0 | test | Bukkit mock for unit tests |
 
-Both CrucialAPI and PlaceholderAPI are soft dependencies. CrucialAPI is auto-downloaded from GitHub releases if missing. PlaceholderAPI features gracefully degrade when absent.
+Both CrucialLib and PlaceholderAPI are soft dependencies. CrucialLib is auto-downloaded from GitHub releases if missing. PlaceholderAPI features gracefully degrade when absent.
 
 ## Project Structure
 
@@ -65,10 +68,10 @@ src/main/java/de/chafficplugins/mininglevels/
 │   └── PlaceholderCommand.java                # Execute commands with placeholder replacement
 └── utils/
     ├── ConfigStrings.java                     # All constants: permissions, config keys, message keys, IDs
-    ├── CustomMessages.java                    # Localization wrapper (extends CrucialAPI LocalizedFromYaml)
+    ├── CustomMessages.java                    # Localization wrapper (extends CrucialLib LocalizedFromYaml)
     ├── SenderUtils.java                       # Permission checks, message sending, debug logging
     ├── MathUtils.java                         # randomDouble(min, max) utility
-    └── Crucial.java                           # CrucialAPI auto-download and version checking
+    └── Crucial.java                           # CrucialLib auto-download and version checking
 
 src/main/resources/
 ├── plugin.yml                                 # Plugin manifest (uses Maven resource filtering)
@@ -77,7 +80,7 @@ src/main/resources/
 
 ## Data Storage
 
-All data is stored as JSON files using CrucialAPI's `Json` utility (GSON-based).
+All data is stored as JSON files using CrucialLib's `Json` utility (GSON-based).
 
 | File | Path | Contents |
 |---|---|---|
@@ -231,9 +234,9 @@ Key messages: `no_permission`, `new_level`, `player_not_exist`, `xp_received`, `
 
 - **Main class:** `MiningLevels.java` — handles lifecycle (`onLoad`/`onEnable`/`onDisable`), config defaults, and event/command registration
 - **Static collections:** `MiningPlayer.miningPlayers`, `MiningLevel.miningLevels`, and `MiningBlock.miningBlocks` are in-memory `ArrayList`s that serve as the data store
-- **GUI framework:** All GUIs extend `Page` from CrucialAPI, providing inventory-based UIs
-- **Localization:** Uses CrucialAPI's `Localizer` with the identifier `mininglevels`
-- **Serialization:** GSON via CrucialAPI's `Json` utility; `Reward` wraps `ItemStack` for JSON compatibility
+- **GUI framework:** All GUIs extend `Page` from CrucialLib, providing inventory-based UIs
+- **Localization:** Uses CrucialLib's `Localizer` with the identifier `mininglevels`
+- **Serialization:** GSON via CrucialLib's `Json` utility; `Reward` wraps `ItemStack` for JSON compatibility
 - **Permission bypass:** `SenderUtils.hasOnePermissions()` grants access to ops and players with `mininglevels.*`
 - **bStats ID:** 14709 (anonymous usage statistics)
 - **Spigot Resource ID:** 100886

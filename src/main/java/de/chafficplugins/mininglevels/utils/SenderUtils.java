@@ -1,7 +1,7 @@
 package de.chafficplugins.mininglevels.utils;
 
 import de.chafficplugins.mininglevels.MiningLevels;
-import io.github.chafficui.CrucialAPI.Utils.localization.Localizer;
+import io.github.chafficui.CrucialLib.Utils.localization.Localizer;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
