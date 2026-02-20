@@ -74,21 +74,6 @@ public class LevelingCommands {
         sendMessage(sender, USAGE_LEVEL);
     }
 
-    public static void info(CommandSender sender) {
-        if(!(sender instanceof Player player)) {
-            sendMessage(sender, NO_CONSOLE_COMMAND);
-            return;
-        }
-        MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
-        if(miningPlayer == null) {
-            sendMessage(sender, ERROR_OCCURRED);
-            return;
-        }
-        MiningLevel miningLevel = miningPlayer.getLevel();
-        sendMessage(sender, CURRENT_LEVEL, miningLevel.getName());
-        sendMessage(sender, CURRENT_XP, String.valueOf(miningPlayer.getXp()), String.valueOf(miningLevel.getNextLevelXP()));
-    }
-
     public static void leaderboard(CommandSender sender) {
         //sort miningPlayers by level and xp
         List<MiningPlayer> miningPlayers = getSortedPlayers();

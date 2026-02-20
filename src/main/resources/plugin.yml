@@ -16,6 +16,3 @@ commands:
       - mr
     usage: /miningrewards
 permissions:
-  mininglevels.info:
-    description: Allows the player to view their mining level and XP
-    default: true
