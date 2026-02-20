@@ -84,12 +84,8 @@ public class MiningLevelsCommandListener implements CommandExecutor {
                         return true;
                     }
                     case "info" -> {
-                        if(!hasOnePermissions(sender, "mininglevels.info")) {
-                            sendMessage(sender, NO_PERMISSION);
-                            return true;
-                        }
-                        LevelingCommands.info(sender);
-                        return true;
+                        sender.sendMessage("§aMining Levels by §c" + plugin.getDescription().getAuthors());
+                        sender.sendMessage("§aVersion: §c" + plugin.getDescription().getVersion());
                     }
                     case "self" -> {
                         if(!(sender instanceof Player)) {
