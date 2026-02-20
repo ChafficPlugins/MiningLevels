@@ -17,6 +17,7 @@ public class ConfigStrings {
     public final static String PERMISSION_RELOAD = "mininglevels.reload";
     public final static String PERMISSION_EDITOR = "mininglevels.editor";
     public final static String PERMISSIONS_LEADERBOARD = "mininglevels.leaderboard";
+    public final static String PERMISSION_INFO = "mininglevels.info";
 
     //Configuration
     public final static String LVL_UP_SOUND = "levelup_sound";
