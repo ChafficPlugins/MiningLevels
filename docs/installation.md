@@ -29,7 +29,11 @@ After first run, MiningLevels creates the following files:
 ```
 plugins/MiningLevels/
 ├── config.yml          # Main configuration
-└── config/
-    ├── levels.json     # Level definitions
-    └── blocks.json     # Mining block definitions
+├── config/
+│   ├── levels.json     # Level definitions
+│   └── blocks.json     # Mining block definitions
+└── data/
+    └── players.json    # Player progress data
 ```
+
+Default `levels.json` and `blocks.json` are bundled inside the plugin JAR and copied automatically on first run. No internet connection is required for setup.

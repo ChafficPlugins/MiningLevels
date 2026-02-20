@@ -1,0 +1,73 @@
+[
+  {
+    "materials": [
+      "STONE"
+    ],
+    "xp": 1,
+    "minLevel": 0
+  },
+  {
+    "materials": [
+      "DEEPSLATE_REDSTONE_ORE",
+      "REDSTONE_ORE"
+    ],
+    "xp": 1,
+    "minLevel": 0
+  },
+  {
+    "materials": [
+      "DEEPSLATE_LAPIS_ORE",
+      "LAPIS_ORE"
+    ],
+    "xp": 1,
+    "minLevel": 3
+  },
+  {
+    "materials": [
+      "DEEPSLATE_COAL_ORE",
+      "COAL_ORE"
+    ],
+    "xp": 10,
+    "minLevel": 0
+  },
+  {
+    "materials": [
+      "DEEPSLATE_GOLD_ORE",
+      "GOLD_ORE"
+    ],
+    "xp": 100,
+    "minLevel": 2
+  },
+  {
+    "materials": [
+      "DEEPSLATE_EMERALD_ORE",
+      "EMERALD_ORE"
+    ],
+    "xp": 10,
+    "minLevel": 3
+  },
+  {
+    "materials": [
+      "DEEPSLATE_COPPER_ORE",
+      "COPPER_ORE"
+    ],
+    "xp": 5,
+    "minLevel": 2
+  },
+  {
+    "materials": [
+      "DEEPSLATE_IRON_ORE",
+      "IRON_ORE"
+    ],
+    "xp": 50,
+    "minLevel": 1
+  },
+  {
+    "materials": [
+      "DEEPSLATE_DIAMOND_ORE",
+      "DIAMOND_ORE"
+    ],
+    "xp": 1000,
+    "minLevel": 5
+  }
+]

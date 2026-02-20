@@ -1,0 +1,112 @@
+[
+  {
+    "name": "1",
+    "nextLevelXP": 100,
+    "ordinal": 0,
+    "instantBreakProbability": 0.0,
+    "extraOreProbability": 0.0,
+    "maxExtraOre": 0,
+    "hasteLevel": 0,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "2",
+    "nextLevelXP": 300,
+    "ordinal": 1,
+    "instantBreakProbability": 5.0,
+    "extraOreProbability": 10.0,
+    "maxExtraOre": 0,
+    "hasteLevel": 0,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "3",
+    "nextLevelXP": 600,
+    "ordinal": 2,
+    "instantBreakProbability": 10.0,
+    "extraOreProbability": 10.0,
+    "maxExtraOre": 2,
+    "hasteLevel": 0,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "4",
+    "nextLevelXP": 1000,
+    "ordinal": 3,
+    "instantBreakProbability": 15.0,
+    "extraOreProbability": 20.0,
+    "maxExtraOre": 2,
+    "hasteLevel": 0,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "5",
+    "nextLevelXP": 2000,
+    "ordinal": 4,
+    "instantBreakProbability": 20.0,
+    "extraOreProbability": 20.0,
+    "maxExtraOre": 4,
+    "hasteLevel": 1,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "6",
+    "nextLevelXP": 6000,
+    "ordinal": 5,
+    "instantBreakProbability": 25.0,
+    "extraOreProbability": 30.0,
+    "maxExtraOre": 4,
+    "hasteLevel": 1,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "7",
+    "nextLevelXP": 14000,
+    "ordinal": 6,
+    "instantBreakProbability": 28.0,
+    "extraOreProbability": 30.0,
+    "maxExtraOre": 6,
+    "hasteLevel": 1,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "8",
+    "nextLevelXP": 32000,
+    "ordinal": 7,
+    "instantBreakProbability": 30.0,
+    "extraOreProbability": 40.0,
+    "maxExtraOre": 6,
+    "hasteLevel": 1,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "9",
+    "nextLevelXP": 69000,
+    "ordinal": 8,
+    "instantBreakProbability": 32.0,
+    "extraOreProbability": 40.0,
+    "maxExtraOre": 8,
+    "hasteLevel": 2,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "10",
+    "nextLevelXP": 150000,
+    "ordinal": 9,
+    "instantBreakProbability": 35.0,
+    "extraOreProbability": 50.0,
+    "maxExtraOre": 10,
+    "hasteLevel": 2,
+    "commands": [],
+    "rewards": []
+  }
+]
