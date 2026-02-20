@@ -221,27 +221,6 @@ class ConfigStringsTest {
         assertNotNull(ConfigStrings.CLOSE);
     }
 
-    // --- download URLs ---
-
-    @Test
-    void downloadUrl_shouldNotBeNull() {
-        assertNotNull(ConfigStrings.DOWNLOAD_URL);
-        assertFalse(ConfigStrings.DOWNLOAD_URL.isEmpty());
-    }
-
-    @Test
-    void jsonFileIds_shouldNotBeNull() {
-        assertNotNull(ConfigStrings.MINING_LEVELS_JSON);
-        assertNotNull(ConfigStrings.MINING_BLOCKS_JSON);
-        assertFalse(ConfigStrings.MINING_LEVELS_JSON.isEmpty());
-        assertFalse(ConfigStrings.MINING_BLOCKS_JSON.isEmpty());
-    }
-
-    @Test
-    void jsonFileIds_shouldBeDifferent() {
-        assertNotEquals(ConfigStrings.MINING_LEVELS_JSON, ConfigStrings.MINING_BLOCKS_JSON);
-    }
-
     // --- all message keys are distinct ---
 
     @Test

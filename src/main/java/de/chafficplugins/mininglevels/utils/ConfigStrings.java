@@ -9,10 +9,6 @@ public class ConfigStrings {
 
     public static String PREFIX = "§8[§6ML§8] §r";
 
-    public final static String DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=";
-    public final static String MINING_LEVELS_JSON = "145W6qtWM2-PA3vyDlOpa3nnYrn0bUVyb";
-    public final static String MINING_BLOCKS_JSON = "1W1EN0NIJKH69cokExNKVglOw6YPbEBYT";
-
     //Permissions
     public final static String PERMISSION_ADMIN = "mininglevels.*";
     public final static String PERMISSION_SET_LEVEL = "mininglevels.setlevel";

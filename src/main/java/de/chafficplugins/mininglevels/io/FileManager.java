@@ -4,19 +4,28 @@ import de.chafficplugins.mininglevels.MiningLevels;
 import io.github.chafficui.CrucialLib.io.Json;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-
-import static de.chafficplugins.mininglevels.utils.ConfigStrings.*;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class FileManager {
-    private final static MiningLevels plugin = MiningLevels.getPlugin(MiningLevels.class);
-    public final static String PLAYERS = plugin.getDataFolder() + "/data/players.json";
-    public final static String BLOCKS = plugin.getDataFolder() + "/config/blocks.json";
-    public final static String LEVELS = plugin.getDataFolder() + "/config/levels.json";
+    private static MiningLevels plugin;
+    private static MiningLevels getPlugin() {
+        if (plugin == null) plugin = MiningLevels.getPlugin(MiningLevels.class);
+        return plugin;
+    }
+
+    public static String PLAYERS;
+    public static String BLOCKS;
+    public static String LEVELS;
+
+    static {
+        MiningLevels p = getPlugin();
+        PLAYERS = p.getDataFolder() + "/data/players.json";
+        BLOCKS = p.getDataFolder() + "/config/blocks.json";
+        LEVELS = p.getDataFolder() + "/config/levels.json";
+    }
 
     public FileManager() throws IOException {
         setupFiles();
@@ -39,27 +48,24 @@ public class FileManager {
         }
         File blocksFile = new File(BLOCKS);
         if (!blocksFile.exists()) {
-            downloadFile(blocksFile, MINING_BLOCKS_JSON);
+            copyDefault("defaults/blocks.json", blocksFile);
         }
         File levelsFile = new File(LEVELS);
         if (!levelsFile.exists()) {
-            downloadFile(levelsFile, MINING_LEVELS_JSON);
+            copyDefault("defaults/levels.json", levelsFile);
         }
     }
 
-    private void downloadFile(File file, String downloadURL) throws IOException {
-        File dir = file.getParentFile();
+    private void copyDefault(String resourcePath, File destination) throws IOException {
+        File dir = destination.getParentFile();
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        try {
-            URL url = new URL(DOWNLOAD_URL + downloadURL);
-            ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException("Could not download " + file.getAbsolutePath() + ".");
+        try (InputStream in = getPlugin().getResource(resourcePath)) {
+            if (in == null) {
+                throw new IOException("Bundled default resource not found: " + resourcePath);
+            }
+            Files.copy(in, destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
     }
 

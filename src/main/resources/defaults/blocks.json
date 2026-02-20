@@ -1,0 +1,87 @@
+[
+  {
+    "materials": [
+      "COAL_ORE",
+      "DEEPSLATE_COAL_ORE"
+    ],
+    "xp": 1,
+    "minLevel": 0
+  },
+  {
+    "materials": [
+      "COPPER_ORE",
+      "DEEPSLATE_COPPER_ORE"
+    ],
+    "xp": 1,
+    "minLevel": 0
+  },
+  {
+    "materials": [
+      "IRON_ORE",
+      "DEEPSLATE_IRON_ORE"
+    ],
+    "xp": 2,
+    "minLevel": 0
+  },
+  {
+    "materials": [
+      "REDSTONE_ORE",
+      "DEEPSLATE_REDSTONE_ORE"
+    ],
+    "xp": 1,
+    "minLevel": 0
+  },
+  {
+    "materials": [
+      "GOLD_ORE",
+      "DEEPSLATE_GOLD_ORE"
+    ],
+    "xp": 3,
+    "minLevel": 1
+  },
+  {
+    "materials": [
+      "LAPIS_ORE",
+      "DEEPSLATE_LAPIS_ORE"
+    ],
+    "xp": 2,
+    "minLevel": 1
+  },
+  {
+    "materials": [
+      "DIAMOND_ORE",
+      "DEEPSLATE_DIAMOND_ORE"
+    ],
+    "xp": 5,
+    "minLevel": 2
+  },
+  {
+    "materials": [
+      "EMERALD_ORE",
+      "DEEPSLATE_EMERALD_ORE"
+    ],
+    "xp": 5,
+    "minLevel": 3
+  },
+  {
+    "materials": [
+      "NETHER_GOLD_ORE"
+    ],
+    "xp": 2,
+    "minLevel": 1
+  },
+  {
+    "materials": [
+      "NETHER_QUARTZ_ORE"
+    ],
+    "xp": 2,
+    "minLevel": 0
+  },
+  {
+    "materials": [
+      "ANCIENT_DEBRIS"
+    ],
+    "xp": 10,
+    "minLevel": 4
+  }
+]

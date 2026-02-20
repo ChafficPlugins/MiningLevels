@@ -86,11 +86,13 @@ public class MiningLevels extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
-        try {
-            MiningPlayer.save();
-        } catch (IOException e) {
-            error("Failed to save files.");
+        // Only save if startup completed successfully (fileManager was initialized)
+        if (fileManager != null) {
+            try {
+                MiningPlayer.save();
+            } catch (IOException e) {
+                error("Failed to save files.");
+            }
         }
         Bukkit.getScheduler().cancelTasks(this);
         log(ChatColor.DARK_GREEN + getDescription().getName() + " is now disabled (Version: " + getDescription().getVersion() + ")");

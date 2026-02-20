@@ -1,0 +1,57 @@
+[
+  {
+    "name": "1",
+    "nextLevelXP": 100,
+    "ordinal": 0,
+    "instantBreakProbability": 0.0,
+    "extraOreProbability": 0.0,
+    "maxExtraOre": 0,
+    "hasteLevel": 0,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "2",
+    "nextLevelXP": 300,
+    "ordinal": 1,
+    "instantBreakProbability": 5.0,
+    "extraOreProbability": 10.0,
+    "maxExtraOre": 0,
+    "hasteLevel": 0,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "3",
+    "nextLevelXP": 500,
+    "ordinal": 2,
+    "instantBreakProbability": 10.0,
+    "extraOreProbability": 15.0,
+    "maxExtraOre": 1,
+    "hasteLevel": 1,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "4",
+    "nextLevelXP": 1000,
+    "ordinal": 3,
+    "instantBreakProbability": 15.0,
+    "extraOreProbability": 20.0,
+    "maxExtraOre": 2,
+    "hasteLevel": 1,
+    "commands": [],
+    "rewards": []
+  },
+  {
+    "name": "5",
+    "nextLevelXP": 2000,
+    "ordinal": 4,
+    "instantBreakProbability": 20.0,
+    "extraOreProbability": 25.0,
+    "maxExtraOre": 3,
+    "hasteLevel": 2,
+    "commands": [],
+    "rewards": []
+  }
+]
