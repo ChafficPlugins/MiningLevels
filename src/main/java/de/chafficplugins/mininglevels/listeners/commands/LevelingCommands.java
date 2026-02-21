@@ -19,14 +19,12 @@ public class LevelingCommands {
         if(args.length == 3) {
             Player player = Bukkit.getPlayer(args[1]);
             if(player != null) {
-                MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
-                if(miningPlayer != null) {
-                    int level = Integer.parseInt(args[2]);
-                    if(level >= 0 && level < MiningLevel.miningLevels.size()) {
-                        miningPlayer.setLevel(level);
-                        sendMessage(player, NEW_LEVEL, String.valueOf(level));
-                        return;
-                    }
+                MiningPlayer miningPlayer = MiningPlayer.getOrCreateMiningPlayer(player.getUniqueId());
+                int level = Integer.parseInt(args[2]);
+                if(level >= 0 && level < MiningLevel.miningLevels.size()) {
+                    miningPlayer.setLevel(level);
+                    sendMessage(player, NEW_LEVEL, String.valueOf(level));
+                    return;
                 }
             } else {
                 sendMessage(sender, PLAYER_NOT_EXIST, args[1]);
@@ -40,14 +38,12 @@ public class LevelingCommands {
         if(args.length == 3) {
             Player player = Bukkit.getPlayer(args[1]);
             if(player != null) {
-                MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
-                if(miningPlayer != null) {
-                    int xp = Integer.parseInt(args[2]);
-                    if(xp >= 0) {
-                        miningPlayer.changeXp(xp);
-                        sendMessage(player, XP_RECEIVED, String.valueOf(xp));
-                        return;
-                    }
+                MiningPlayer miningPlayer = MiningPlayer.getOrCreateMiningPlayer(player.getUniqueId());
+                int xp = Integer.parseInt(args[2]);
+                if(xp >= 0) {
+                    miningPlayer.changeXp(xp);
+                    sendMessage(player, XP_RECEIVED, String.valueOf(xp));
+                    return;
                 }
             } else {
                 sendMessage(sender, PLAYER_NOT_EXIST, args[1]);
@@ -61,11 +57,9 @@ public class LevelingCommands {
         if(args.length == 2) {
             Player player = Bukkit.getPlayer(args[1]);
             if(player != null) {
-                MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
-                if(miningPlayer != null) {
-                    sendMessage(sender, LEVEL_OF, player.getDisplayName(), String.valueOf(miningPlayer.getLevel().getName()));
-                    return;
-                }
+                MiningPlayer miningPlayer = MiningPlayer.getOrCreateMiningPlayer(player.getUniqueId());
+                sendMessage(sender, LEVEL_OF, player.getDisplayName(), String.valueOf(miningPlayer.getLevel().getName()));
+                return;
             } else {
                 sendMessage(sender, PLAYER_NOT_EXIST, args[1]);
                 return;

@@ -16,10 +16,7 @@ public class RewardCommandListener  implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("miningrewards")) {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
-                MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
-                if(miningPlayer == null) {
-                    return true;
-                }
+                MiningPlayer miningPlayer = MiningPlayer.getOrCreateMiningPlayer(player.getUniqueId());
                 switch (miningPlayer.claim()) {
                     case 0 -> sendMessage(player, NO_REWARDS, ChatColor.RED);
                     case 1 -> sendMessage(player, REWARDS_CLAIMED, ChatColor.GREEN);

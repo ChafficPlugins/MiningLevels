@@ -6,7 +6,7 @@
 
     <groupId>de.chafficplugins</groupId>
     <artifactId>MiningLevels</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <packaging>jar</packaging>
 
     <name>MiningLevels</name>
@@ -98,7 +98,7 @@
         <dependency>
             <groupId>com.github.ChafficPlugins</groupId>
             <artifactId>CrucialLib</artifactId>
-            <version>v3.0.0</version>
+            <version>v3.0.1</version>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
