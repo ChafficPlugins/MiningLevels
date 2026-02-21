@@ -37,3 +37,7 @@ plugins/MiningLevels/
 ```
 
 Default `levels.json` and `blocks.json` are bundled inside the plugin JAR and copied automatically on first run. No internet connection is required for setup.
+
+### Player Auto-Registration
+
+Since version 1.3.1, players are automatically registered when they interact with any MiningLevels feature (mining, commands, placeholders, etc.). Previously, if a player was missing from `players.json`, actions like mining or running commands would fail with an error. Now the plugin creates a new player entry (level 0, 0 XP) on the fly and saves it immediately. Players are still also registered on join as before.

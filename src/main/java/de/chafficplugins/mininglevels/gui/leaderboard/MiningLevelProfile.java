@@ -33,8 +33,7 @@ public class MiningLevelProfile extends Page {
 
     @Override
     public void populate() {
-        MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
-        if (miningPlayer == null) return;
+        MiningPlayer miningPlayer = MiningPlayer.getOrCreateMiningPlayer(player.getUniqueId());
         ItemStack stack = Stack.getStack(miningPlayer.getUUID(), miningPlayer.getOfflinePlayer().getName(), List.of(
                 Localizer.getLocalizedString(LOCALIZED_IDENTIFIER + "_" + CURRENT_LEVEL, miningPlayer.getLevel().getName()),
                 Localizer.getLocalizedString(LOCALIZED_IDENTIFIER + "_" + CURRENT_XP, miningPlayer.getXp() + "", miningPlayer.getLevel().getNextLevelXP() + "")

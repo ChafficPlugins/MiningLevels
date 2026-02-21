@@ -48,7 +48,7 @@ The shaded JAR is produced at `target/MiningLevels-<version>.jar`.
 
 ## External Dependencies
 
-- **CrucialLib 3.0.0** — JSON persistence, localization, boss bars, player effects
+- **CrucialLib 3.0.1** — JSON persistence, localization, boss bars, player effects
 - **PlaceholderAPI** (optional) — exposes level/XP placeholders and command rewards
 
 ## Testing Notes

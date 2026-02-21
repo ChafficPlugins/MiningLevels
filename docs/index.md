@@ -23,7 +23,7 @@ MiningLevels is a Spigot plugin that adds levels to your mining experience, brin
 
 - Java 21+
 - Paper or Spigot 1.21+
-- [CrucialLib 3.0.0+](https://github.com/ChafficPlugins/CrucialLib)
+- [CrucialLib 3.0.1+](https://github.com/ChafficPlugins/CrucialLib)
 - [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) (optional, required for placeholders and level-up commands)
 
 ## License

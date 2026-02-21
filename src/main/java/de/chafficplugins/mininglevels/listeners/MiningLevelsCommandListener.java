@@ -146,11 +146,7 @@ public class MiningLevelsCommandListener implements CommandExecutor {
 
     private boolean showLevelInfo(CommandSender sender) {
         Player player = (Player) sender;
-        MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
-        if(miningPlayer == null) {
-            sendMessage(sender, ERROR_OCCURRED);
-            return true;
-        }
+        MiningPlayer miningPlayer = MiningPlayer.getOrCreateMiningPlayer(player.getUniqueId());
 
         new MiningLevelProfile(player).open(player);
 

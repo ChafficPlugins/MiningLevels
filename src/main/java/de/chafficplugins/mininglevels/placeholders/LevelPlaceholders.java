@@ -35,8 +35,7 @@ public class LevelPlaceholders extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String identifier) {
-        MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(player.getUniqueId());
-        if(miningPlayer == null) return "error";
+        MiningPlayer miningPlayer = MiningPlayer.getOrCreateMiningPlayer(player.getUniqueId());
         switch (identifier) {
             case "player_name" -> {
                 return miningPlayer.getOfflinePlayer().getName();

@@ -247,6 +247,25 @@ public class MiningPlayer {
     }
 
     /**
+     * Gets the MiningPlayer with the given UUID, or creates a new one if it doesn't exist.
+     * @param uuid The UUID of the player to get or create.
+     * @return The MiningPlayer with the given UUID.
+     */
+    public static MiningPlayer getOrCreateMiningPlayer(UUID uuid) {
+        MiningPlayer existing = getMiningPlayer(uuid);
+        if (existing != null) {
+            return existing;
+        }
+        MiningPlayer newPlayer = new MiningPlayer(uuid, 0, 0);
+        try {
+            save();
+        } catch (IOException e) {
+            getPlugin().error("Failed to save new player: " + e.getMessage());
+        }
+        return newPlayer;
+    }
+
+    /**
      * Checks if the given player is a MiningPlayer.
      *
      * @param uuid The UUID of the player to check.

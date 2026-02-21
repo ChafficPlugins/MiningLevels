@@ -75,8 +75,8 @@ public class NoXpBlockEvents implements Listener {
                 ArrayList<Block> blocksToRemove = new ArrayList<>();
                 for(final Block block : event.blockList()) {
                     MiningBlock miningBlock = MiningBlock.getMiningBlock(block.getType());
-                    MiningPlayer miningPlayer = MiningPlayer.getMiningPlayer(playerWithTNT.getPlayer().getUniqueId());
-                    if(miningBlock != null && miningPlayer != null) {
+                    MiningPlayer miningPlayer = MiningPlayer.getOrCreateMiningPlayer(playerWithTNT.getPlayer().getUniqueId());
+                    if(miningBlock != null) {
                         if(miningPlayer.getLevel().getOrdinal() < miningBlock.getMinLevel()) {
                             blocksToRemove.add(block);
                         }

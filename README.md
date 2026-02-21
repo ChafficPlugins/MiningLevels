@@ -24,5 +24,5 @@ All dependencies are managed automatically by Maven.
 * Paper API
     * Version: 1.21
 * CrucialLib
-    * Version: 3.0.0
+    * Version: 3.0.1
     * [GitHub](https://github.com/ChafficPlugins/CrucialLib)
